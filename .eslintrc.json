@@ -4,18 +4,31 @@
     "node": true
   },
   "extends": [
-    "airbnb-base",
-    "eslint-plugin-import"
+    "airbnb-base"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 13,
+    "ecmaVersion": 2021,
     "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint"
   ],
   "rules": {
-    "no-console": "off"
+    "import/no-unresolved": "error",
+    "no-console": "off",
+    "quotes": ["error", "single"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+          "ts": "never"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
