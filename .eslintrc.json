@@ -16,9 +16,11 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "import/no-unresolved": "error",
+    "class-methods-use-this": "off",
     "no-console": "off",
     "quotes": ["error", "single"],
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "error",
     "import/extensions": [
       "error",
       "ignorePackages",
