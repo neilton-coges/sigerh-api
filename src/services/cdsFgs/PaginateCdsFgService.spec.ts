@@ -1,13 +1,13 @@
 import { FakeCdsFgsRepository } from '../../repositories/fakes/FakeCdsFgsRepository';
-import { PageCdsFgService } from './PageCdsFgService';
+import { PaginateCdsFgService } from './PaginateCdsFgService';
 
 let fakeCdsFgsRepository: FakeCdsFgsRepository;
-let pageCdsFgService: PageCdsFgService;
+let paginateCdsFgService: PaginateCdsFgService;
 
-describe('PageCdsFG', () => {
+describe('PaginateCdsFg', () => {
   beforeEach(() => {
     fakeCdsFgsRepository = new FakeCdsFgsRepository();
-    pageCdsFgService = new PageCdsFgService(fakeCdsFgsRepository);
+    paginateCdsFgService = new PaginateCdsFgService(fakeCdsFgsRepository);
   });
 
   it('deve paginar CDS/FG', async () => {
@@ -27,7 +27,7 @@ describe('PageCdsFG', () => {
       qtdVagas: 5,
     });
 
-    const page = await pageCdsFgService.execute({ perPage: 1, current: 2 });
+    const page = await paginateCdsFgService.execute({ perPage: 1, current: 2 });
 
     expect(page.data).toEqual([cdsFg2]);
     expect(page.total).toBe(2);

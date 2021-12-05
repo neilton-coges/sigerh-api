@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 
 import { CreateCdsFgService } from '../services/cdsFgs/CreateCdsFgService';
 import { ListCdsFgService } from '../services/cdsFgs/ListCdsFgService';
-import { PageCdsFgService } from '../services/cdsFgs/PageCdsFgService';
+import { PaginateCdsFgService } from '../services/cdsFgs/PaginateCdsFgService';
 import { ShowCdsFgService } from '../services/cdsFgs/ShowCdsFgService';
 import { UpdateCdsFgService } from '../services/cdsFgs/UpdateCdsFgService';
 
@@ -22,11 +22,9 @@ class CdsFgsController {
       tipo, sigla, nome, current, perPage, isPaginate = false,
     } = request.query as IndexRequestQuery;
 
-    const listCdsFgService = container.resolve(ListCdsFgService);
-
     if (isPaginate) {
-      const pageCdsFgService = container.resolve(PageCdsFgService);
-      const page = await pageCdsFgService.execute({
+      const paginateCdsFgService = container.resolve(PaginateCdsFgService);
+      const page = await paginateCdsFgService.execute({
         tipo,
         sigla,
         nome,
@@ -36,6 +34,7 @@ class CdsFgsController {
 
       return response.json(page);
     }
+    const listCdsFgService = container.resolve(ListCdsFgService);
     const list = await listCdsFgService.execute({
       tipo,
       nome,

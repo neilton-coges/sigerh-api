@@ -1,17 +1,11 @@
 import { inject, injectable } from 'tsyringe';
-import { CdsFg } from '../../entities/CdsFg';
-import { ICdsFgsRepository } from '../../repositories/models/ICdsFgsRepository';
-import { IPage } from '../../repositories/models/IPage';
-import { IPaginator } from '../../repositories/models/IPaginator';
 
-interface PageCdsFgRequest extends IPaginator {
-  tipo?: 'CDS' | 'FG',
-  sigla?: string;
-  nome?: string;
-}
+import { CdsFg } from '../../entities/CdsFg';
+import { ICdsFgsRepository, PaginateCdsFgData } from '../../repositories/models/ICdsFgsRepository';
+import { IPage } from '../../repositories/models/IPage';
 
 @injectable()
-class PageCdsFgService {
+class PaginateCdsFgService {
   constructor(
     @inject('CdsFgsRepository')
     private cdsFgsRepository: ICdsFgsRepository,
@@ -19,7 +13,7 @@ class PageCdsFgService {
 
   async execute({
     tipo, sigla, nome, current = 1, perPage = 15,
-  }: PageCdsFgRequest): Promise<IPage<CdsFg>> {
+  }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     return this.cdsFgsRepository.paginate({
       tipo,
       sigla,
@@ -30,4 +24,4 @@ class PageCdsFgService {
   }
 }
 
-export { PageCdsFgService };
+export { PaginateCdsFgService };

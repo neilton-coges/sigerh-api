@@ -1,12 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { CdsFg } from '../../entities/CdsFg';
-import { ICdsFgsRepository } from '../../repositories/models/ICdsFgsRepository';
-
-type ListCdsFgRequest = {
-  tipo?: 'CDS' | 'FG',
-  sigla?: string;
-  nome?: string;
-};
+import { ICdsFgsRepository, ListCdsFgData } from '../../repositories/models/ICdsFgsRepository';
 
 @injectable()
 class ListCdsFgService {
@@ -15,8 +9,8 @@ class ListCdsFgService {
     private cdsFgsRepostiory: ICdsFgsRepository,
   ) {}
 
-  async execute({ tipo, sigla, nome }: ListCdsFgRequest): Promise<CdsFg[]> {
-    return this.cdsFgsRepostiory.filter({
+  async execute({ tipo, sigla, nome }: ListCdsFgData): Promise<CdsFg[]> {
+    return this.cdsFgsRepostiory.list({
       tipo,
       sigla,
       nome,

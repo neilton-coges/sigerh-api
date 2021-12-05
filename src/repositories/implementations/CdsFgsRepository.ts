@@ -2,7 +2,7 @@ import { getRepository, Like, Repository } from 'typeorm';
 
 import { CdsFg } from '../../entities/CdsFg';
 import {
-  CreateCdsFgData, FilterData, ICdsFgsRepository, PaginateData,
+  CreateCdsFgData, ListCdsFgData, ICdsFgsRepository, PaginateCdsFgData,
 } from '../models/ICdsFgsRepository';
 import { IPage } from '../models/IPage';
 
@@ -41,7 +41,7 @@ class CdsFgsRepository implements ICdsFgsRepository {
     return this.repository.findOne({ sigla });
   }
 
-  async filter({ tipo, sigla, nome }: FilterData): Promise<CdsFg[]> {
+  async list({ tipo, sigla, nome }: ListCdsFgData): Promise<CdsFg[]> {
     const query = this.repository.createQueryBuilder();
 
     if (tipo) {
@@ -67,7 +67,7 @@ class CdsFgsRepository implements ICdsFgsRepository {
 
   async paginate({
     tipo, sigla, nome, current, perPage,
-  }: PaginateData): Promise<IPage<CdsFg>> {
+  }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     const skip = current * perPage - perPage;
     const take = perPage;
 

@@ -1,6 +1,6 @@
 import { CdsFg } from '../../entities/CdsFg';
 import {
-  CreateCdsFgData, FilterData, ICdsFgsRepository, PaginateData,
+  CreateCdsFgData, ListCdsFgData, ICdsFgsRepository, PaginateCdsFgData,
 } from '../models/ICdsFgsRepository';
 import { IPage } from '../models/IPage';
 
@@ -41,7 +41,7 @@ class FakeCdsFgsRepository implements ICdsFgsRepository {
     return this.cdsFgs.find((item) => item.sigla === sigla);
   }
 
-  async filter({ nome, sigla, tipo }: FilterData): Promise<CdsFg[]> {
+  async list({ nome, sigla, tipo }: ListCdsFgData): Promise<CdsFg[]> {
     let { cdsFgs } = this;
 
     if (tipo) {
@@ -61,7 +61,7 @@ class FakeCdsFgsRepository implements ICdsFgsRepository {
 
   async paginate({
     tipo, sigla, nome, current, perPage,
-  }: PaginateData): Promise<IPage<CdsFg>> {
+  }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     const skip = current * perPage - perPage;
     const take = skip + perPage;
 
