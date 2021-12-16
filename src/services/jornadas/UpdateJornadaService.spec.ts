@@ -38,10 +38,7 @@ describe('UpdateJornada', () => {
     });
 
     expect(jornadaUpdated.nome).toBe('updatedNome');
-    expect(jornadaUpdated.horas).toContainEqual({
-      horaInicio: '13:00:00',
-      horaFim: '17:00:00',
-    });
+    expect(jornadaUpdated.horas).toHaveLength(2);
   });
 
   it('não deve ser possível atualizar uma jornada inexistente', async () => {
