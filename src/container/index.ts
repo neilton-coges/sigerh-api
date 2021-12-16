@@ -8,8 +8,11 @@ import { IUnidadesRepository } from '../repositories/models/IUnidadesRepository'
 import { UnidadesRepository } from '../repositories/implementations/UnidadesRepository';
 import { IJornadasRepository } from '../repositories/models/IJornadasRepository';
 import { JornadasRepository } from '../repositories/implementations/JornadasRepository';
+import { IServidoresRepository } from '../repositories/models/IServidoresRepository';
+import { ServidoresRepository } from '../repositories/implementations/ServidoresRepository';
 
 container.registerSingleton<ICdsFgsRepository>('CdsFgsRepository', CdsFgsRepository);
 container.registerSingleton<ICargosRepository>('CargosRepository', CargosRepository);
 container.registerSingleton<IUnidadesRepository>('UnidadesRepository', UnidadesRepository);
 container.registerSingleton<IJornadasRepository>('JornadasRepository', JornadasRepository);
+container.registerSingleton<IServidoresRepository>('ServidoresRepository', ServidoresRepository);
