@@ -1,4 +1,6 @@
-import { getRepository, Like, Repository } from 'typeorm';
+import {
+  getRepository, ILike, Repository,
+} from 'typeorm';
 
 import { CdsFg } from '../../entities/CdsFg';
 import {
@@ -14,14 +16,13 @@ class CdsFgsRepository implements ICdsFgsRepository {
   }
 
   async create({
-    tipo, sigla, nome, valor, qtdVagas,
+    tipo, simbologia, remuneracao, quantidadeVagas,
   }: CreateCdsFgData): Promise<CdsFg> {
     const cdsFg = this.repository.create({
       tipo,
-      sigla,
-      nome,
-      valor,
-      qtdVagas,
+      simbologia,
+      remuneracao,
+      quantidadeVagas,
     });
 
     await this.repository.save(cdsFg);
@@ -33,15 +34,19 @@ class CdsFgsRepository implements ICdsFgsRepository {
     return this.repository.save(cdsFg);
   }
 
+  async destroy(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
   async findById(id: string): Promise<CdsFg> {
     return this.repository.findOne(id);
   }
 
-  async findBySigla(sigla: string): Promise<CdsFg> {
-    return this.repository.findOne({ sigla });
+  async findBySimbologia(simbologia: string): Promise<CdsFg> {
+    return this.repository.findOne({ simbologia });
   }
 
-  async list({ tipo, sigla, nome }: ListCdsFgData): Promise<CdsFg[]> {
+  async list({ tipo, simbologia }: ListCdsFgData): Promise<CdsFg[]> {
     const query = this.repository.createQueryBuilder();
 
     if (tipo) {
@@ -50,15 +55,9 @@ class CdsFgsRepository implements ICdsFgsRepository {
       });
     }
 
-    if (sigla) {
+    if (simbologia) {
       query.andWhere({
-        sigla,
-      });
-    }
-
-    if (nome) {
-      query.andWhere({
-        nome: Like(`%${nome}%`),
+        simbologia,
       });
     }
 
@@ -66,7 +65,7 @@ class CdsFgsRepository implements ICdsFgsRepository {
   }
 
   async paginate({
-    tipo, sigla, nome, current, perPage,
+    tipo, simbologia, current, perPage,
   }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     const skip = current * perPage - perPage;
     const take = perPage;
@@ -79,15 +78,9 @@ class CdsFgsRepository implements ICdsFgsRepository {
       });
     }
 
-    if (sigla) {
+    if (simbologia) {
       query.andWhere({
-        sigla,
-      });
-    }
-
-    if (nome) {
-      query.andWhere({
-        nome,
+        simbologia: ILike(`%${simbologia}%`),
       });
     }
 

@@ -9,10 +9,9 @@ const cdsFgsController = new CdsFgsController();
 const bodyValidation = {
   [Segments.BODY]: {
     tipo: Joi.string().required().valid('CDS', 'FG'),
-    sigla: Joi.string().required(),
-    nome: Joi.string().required(),
-    valor: Joi.number().required().positive(),
-    qtdVagas: Joi.number().required().positive(),
+    simbologia: Joi.string().required(),
+    remuneracao: Joi.number().required().positive(),
+    quantidadeVagas: Joi.number().required().positive(),
   },
 };
 
@@ -24,5 +23,6 @@ cdsFgsRoutes.get('/', cdsFgsController.index);
 cdsFgsRoutes.get('/:id', cdsFgsController.show);
 cdsFgsRoutes.post('/', createValidation, cdsFgsController.create);
 cdsFgsRoutes.put('/:id', updateValidation, cdsFgsController.update);
+cdsFgsRoutes.delete('/:id', cdsFgsController.destroy);
 
 export { cdsFgsRoutes };

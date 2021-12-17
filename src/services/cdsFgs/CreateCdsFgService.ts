@@ -2,9 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { CdsFg } from '../../entities/CdsFg';
 import { AppError } from '../../error/AppError';
-import { ICdsFgsRepository } from '../../repositories/models/ICdsFgsRepository';
-
-type CreateCdsFgRequest = Omit<CdsFg, 'id' | 'qtdNomeados' | 'createdAt' | 'updatedAt'>;
+import { CreateCdsFgData, ICdsFgsRepository } from '../../repositories/models/ICdsFgsRepository';
 
 @injectable()
 class CreateCdsFgService {
@@ -14,20 +12,19 @@ class CreateCdsFgService {
   ) {}
 
   async execute({
-    tipo, sigla, nome, valor, qtdVagas,
-  }: CreateCdsFgRequest): Promise<CdsFg> {
-    const cdsFgAlreadyExists = await this.cdsFgsRepository.findBySigla(sigla);
+    tipo, simbologia, remuneracao, quantidadeVagas,
+  }: CreateCdsFgData): Promise<CdsFg> {
+    const cdsFgAlreadyExists = await this.cdsFgsRepository.findBySimbologia(simbologia);
 
     if (cdsFgAlreadyExists) {
-      throw new AppError('Já existe um CDS/FG com esta sigla.');
+      throw new AppError('Já existe um CDS/FG com esta simbologia.');
     }
 
     const cdsFg = await this.cdsFgsRepository.create({
       tipo,
-      sigla,
-      nome,
-      valor,
-      qtdVagas,
+      simbologia,
+      remuneracao,
+      quantidadeVagas,
     });
 
     return cdsFg;

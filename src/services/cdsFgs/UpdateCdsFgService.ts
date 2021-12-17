@@ -1,9 +1,8 @@
 import { inject, injectable } from 'tsyringe';
+
 import { CdsFg } from '../../entities/CdsFg';
 import { AppError } from '../../error/AppError';
-import { ICdsFgsRepository } from '../../repositories/models/ICdsFgsRepository';
-
-type UpdateCdsFgRequest = Omit<CdsFg, 'qtdNomeados' | 'createdAt' | 'updatedAt'>
+import { ICdsFgsRepository, UpdateCdsFgData } from '../../repositories/models/ICdsFgsRepository';
 
 @injectable()
 class UpdateCdsFgService {
@@ -13,29 +12,28 @@ class UpdateCdsFgService {
   ) {}
 
   async execute({
-    id, tipo, sigla, nome, valor, qtdVagas,
-  }: UpdateCdsFgRequest): Promise<CdsFg> {
+    id, tipo, simbologia, remuneracao, quantidadeVagas,
+  }: UpdateCdsFgData): Promise<CdsFg> {
     const cdsFg = await this.cdsFgsRepository.findById(id);
 
     if (!cdsFg) {
       throw new AppError('CDS/FG não encontrado.');
     }
 
-    const cdsFgAlreadyExists = await this.cdsFgsRepository.findBySigla(sigla);
+    const cdsFgAlreadyExists = await this.cdsFgsRepository.findBySimbologia(simbologia);
 
     if (cdsFgAlreadyExists && cdsFgAlreadyExists.id !== id) {
-      throw new AppError('Já existe um CDS/FG com esta sigla.');
+      throw new AppError('Já existe um CDS/FG com esta simbologia.');
     }
 
-    if (qtdVagas < cdsFg.qtdNomeados) {
+    if (quantidadeVagas < cdsFg.quantidadeNomeados) {
       throw new AppError('Não é permitido ter quantidade de vagas menor do que de nomeados.');
     }
 
     cdsFg.tipo = tipo;
-    cdsFg.sigla = sigla;
-    cdsFg.nome = nome;
-    cdsFg.valor = valor;
-    cdsFg.qtdVagas = qtdVagas;
+    cdsFg.simbologia = simbologia;
+    cdsFg.remuneracao = remuneracao;
+    cdsFg.quantidadeVagas = quantidadeVagas;
 
     const cdsFgUpdated = await this.cdsFgsRepository.update(cdsFg);
 

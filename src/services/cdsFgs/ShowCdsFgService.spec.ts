@@ -14,10 +14,9 @@ describe('ShowCdsFg', () => {
   it('deve ser possivel mostrar um CDS/FG', async () => {
     const { id } = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla',
-      nome: 'nome',
-      valor: 4000,
-      qtdVagas: 10,
+      simbologia: 'cdsFgSimbologia',
+      remuneracao: 4000,
+      quantidadeVagas: 10,
     });
 
     const cdsFg = await showCdsFgService.execute(id);

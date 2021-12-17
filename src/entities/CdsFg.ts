@@ -8,19 +8,16 @@ class CdsFg extends BaseModel {
   tipo: 'CDS' | 'FG';
 
   @Column()
-  sigla: string;
+  simbologia: string;
 
   @Column()
-  nome: string;
+  remuneracao: number;
 
-  @Column()
-  valor: number;
+  @Column({ name: 'quantidade_vagas' })
+  quantidadeVagas: number;
 
-  @Column({ name: 'qtd_vagas' })
-  qtdVagas: number;
-
-  @Column({ name: 'qtd_nomeados' })
-  qtdNomeados: number;
+  @Column({ name: 'quantidade_nomeados' })
+  quantidadeNomeados: number;
 }
 
 export { CdsFg };

@@ -8,17 +8,16 @@ class FakeCdsFgsRepository implements ICdsFgsRepository {
   private cdsFgs: CdsFg[] = [];
 
   async create({
-    tipo, sigla, nome, valor, qtdVagas,
+    tipo, simbologia, remuneracao, quantidadeVagas,
   }: CreateCdsFgData): Promise<CdsFg> {
     const cdsFg = new CdsFg();
 
     Object.assign(cdsFg, {
       tipo,
-      sigla,
-      nome,
-      valor,
-      qtdVagas,
-      qtdNomeados: 0,
+      simbologia,
+      remuneracao,
+      quantidadeVagas,
+      quantidadeNomeados: 0,
     });
 
     this.cdsFgs.push(cdsFg);
@@ -33,34 +32,40 @@ class FakeCdsFgsRepository implements ICdsFgsRepository {
     return cdsFg;
   }
 
+  async destroy(id: string): Promise<void> {
+    const index = this.cdsFgs.findIndex((item) => item.id === id);
+
+    this.cdsFgs.splice(index, 1);
+  }
+
   async findById(id: string): Promise<CdsFg> {
     return this.cdsFgs.find((item) => item.id === id);
   }
 
-  async findBySigla(sigla: string): Promise<CdsFg> {
-    return this.cdsFgs.find((item) => item.sigla === sigla);
+  async findBySimbologia(simbologia: string): Promise<CdsFg> {
+    return this.cdsFgs.find((item) => item.simbologia === simbologia);
   }
 
-  async list({ nome, sigla, tipo }: ListCdsFgData): Promise<CdsFg[]> {
-    let { cdsFgs } = this;
+  async list({ tipo, simbologia }: ListCdsFgData): Promise<CdsFg[]> {
+    let data = [...this.cdsFgs];
 
-    if (tipo) {
-      cdsFgs = cdsFgs.filter((item) => item.tipo === tipo);
+    if (tipo || simbologia) {
+      data = this.cdsFgs.filter(
+        (item) => item.tipo.includes(tipo) || item.simbologia.includes(simbologia),
+      );
     }
 
-    if (sigla) {
-      cdsFgs = cdsFgs.filter((item) => item.sigla.includes(sigla));
+    if (tipo && simbologia) {
+      data = this.cdsFgs.filter(
+        (item) => item.tipo.includes(tipo) && item.simbologia.includes(simbologia),
+      );
     }
 
-    if (nome) {
-      cdsFgs = cdsFgs.filter((item) => item.nome.includes(nome));
-    }
-
-    return cdsFgs;
+    return data;
   }
 
   async paginate({
-    tipo, sigla, nome, current, perPage,
+    tipo, simbologia, current, perPage,
   }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     const skip = current * perPage - perPage;
     const take = skip + perPage;
@@ -71,12 +76,8 @@ class FakeCdsFgsRepository implements ICdsFgsRepository {
       data = data.filter((item) => item.tipo === tipo);
     }
 
-    if (sigla) {
-      data = data.filter((item) => item.sigla.includes(sigla));
-    }
-
-    if (nome) {
-      data = data.filter((item) => item.nome.includes(nome));
+    if (simbologia) {
+      data = data.filter((item) => item.simbologia.includes(simbologia));
     }
 
     const size = data.length;
