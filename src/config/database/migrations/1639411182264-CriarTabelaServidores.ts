@@ -8,6 +8,7 @@ export class CriarTabelaServidores1639436969524 implements MigrationInterface {
         {
           name: 'id',
           type: 'uuid',
+          isPrimary: true,
         },
         {
           name: 'nome',
