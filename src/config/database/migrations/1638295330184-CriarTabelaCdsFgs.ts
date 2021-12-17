@@ -16,23 +16,19 @@ export class CriarTabelaCdsFgs1638295330184 implements MigrationInterface {
           enum: ['CDS', 'FG'],
         },
         {
-          name: 'sigla',
+          name: 'simbologia',
           type: 'varchar',
         },
         {
-          name: 'nome',
-          type: 'varchar',
-        },
-        {
-          name: 'valor',
+          name: 'remuneracao',
           type: 'numeric',
         },
         {
-          name: 'qtd_vagas',
+          name: 'quantidade_vagas',
           type: 'numeric',
         },
         {
-          name: 'qtd_nomeados',
+          name: 'quantidade_nomeados',
           type: 'numeric',
           default: 0,
         },

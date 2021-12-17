@@ -14,10 +14,9 @@ describe('UpdateCdsFg', () => {
   it('deve ser possível atualizar um CDS/FG', async () => {
     const cdsFg = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla',
-      nome: 'nome',
-      valor: 2000,
-      qtdVagas: 20,
+      simbologia: 'cdsFgSimbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 20,
     });
 
     const cdsFgUpdated = await updateCdsFgService.execute({
@@ -30,50 +29,46 @@ describe('UpdateCdsFg', () => {
 
   it('não deve ser possível atualizar um CDS/FG inexistente', async () => {
     await expect(updateCdsFgService.execute({
-      id: 'inexistente',
+      id: 'cdsFgIdInexistente',
       tipo: 'CDS',
-      sigla: 'sigla',
-      nome: 'nome',
-      valor: 3000,
-      qtdVagas: 10,
+      simbologia: 'cdsFgSimbologia',
+      remuneracao: 3000,
+      quantidadeVagas: 10,
     })).rejects.toBeInstanceOf(AppError);
   });
 
-  it('não deve ser possível atualizar um CDS/FG com sigla já existente', async () => {
+  it('não deve ser possível atualizar um CDS/FG com simbologia já existente', async () => {
     await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla1',
-      nome: 'nome1',
-      valor: 2000,
-      qtdVagas: 20,
+      simbologia: 'cdsFg1Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 20,
     });
 
     const cdsFg = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla2',
-      nome: 'nome2',
-      valor: 1500,
-      qtdVagas: 25,
+      simbologia: 'cdsFg2Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 20,
     });
 
     await expect(updateCdsFgService.execute({
       ...cdsFg,
-      sigla: 'sigla1',
+      simbologia: 'cdsFg1Simbologia',
     })).rejects.toBeInstanceOf(AppError);
   });
 
   it('não deve ser possível atualizar um CDS/FG com quantidade de vagas menor do que quantidade de nomeados', async () => {
     const cdsFg = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla',
-      nome: 'nome',
-      valor: 2000,
-      qtdVagas: 20,
+      simbologia: 'cdsFgSimbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 20,
     });
 
     await expect(updateCdsFgService.execute({
       ...cdsFg,
-      qtdVagas: -2,
+      quantidadeVagas: -2,
     })).rejects.toBeInstanceOf(AppError);
   });
 });

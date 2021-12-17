@@ -14,31 +14,28 @@ describe('CreateCdsFg', () => {
   it('deve ser possível cadastrar um novo CDS/FG', async () => {
     const cdsFg = await createCdsFgService.execute({
       tipo: 'CDS',
-      sigla: 'sigla',
-      nome: 'nome',
-      valor: 1000,
-      qtdVagas: 100,
+      simbologia: 'cdsFgSimbologia',
+      remuneracao: 1000,
+      quantidadeVagas: 100,
     });
 
     expect(cdsFg).toHaveProperty('id');
   });
 
-  it('não deve ser possível cadastrar um novo CDS/FG com SIGLA já existente', async () => {
+  it('não deve ser possível cadastrar um novo CDS/FG com simbologia já existente', async () => {
     await createCdsFgService.execute({
       tipo: 'CDS',
-      sigla: 'sigla-duplicada',
-      nome: 'nome',
-      valor: 1000,
-      qtdVagas: 100,
+      simbologia: 'cdsFgSimbologiaExistente',
+      remuneracao: 1000,
+      quantidadeVagas: 100,
     });
 
     await expect(
       createCdsFgService.execute({
         tipo: 'CDS',
-        sigla: 'sigla-duplicada',
-        nome: 'nome',
-        valor: 1000,
-        qtdVagas: 100,
+        simbologia: 'cdsFgSimbologiaExistente',
+        remuneracao: 1000,
+        quantidadeVagas: 100,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

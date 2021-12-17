@@ -13,18 +13,16 @@ describe('ListCdsFg', () => {
   it('deve listar CDS/FG', async () => {
     const cdsFg1 = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla1',
-      nome: 'nome1',
-      valor: 2000,
-      qtdVagas: 10,
+      simbologia: 'cdsFg1Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 10,
     });
 
     const cdsFg2 = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla2',
-      nome: 'nome2',
-      valor: 3000,
-      qtdVagas: 5,
+      simbologia: 'cdsFg2Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 10,
     });
 
     const cdsFgs = await listCdsFgService.execute({});
@@ -36,18 +34,16 @@ describe('ListCdsFg', () => {
   it('deve listar apenas CDS/FG do tipo CDS', async () => {
     await fakeCdsFgsRepository.create({
       tipo: 'FG',
-      sigla: 'sigla1',
-      nome: 'nome1',
-      valor: 2000,
-      qtdVagas: 10,
+      simbologia: 'cdsFg1Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 10,
     });
 
-    const cdsFg2 = await fakeCdsFgsRepository.create({
+    const cds = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla2',
-      nome: 'nome2',
-      valor: 3000,
-      qtdVagas: 5,
+      simbologia: 'cdsFg2Simbologia',
+      remuneracao: 1000,
+      quantidadeVagas: 5,
     });
 
     const cdsFgs = await listCdsFgService.execute({
@@ -55,6 +51,6 @@ describe('ListCdsFg', () => {
     });
 
     expect(cdsFgs).toHaveLength(1);
-    expect(cdsFgs).toEqual(expect.arrayContaining([cdsFg2]));
+    expect(cdsFgs).toEqual(expect.arrayContaining([cds]));
   });
 });

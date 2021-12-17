@@ -12,12 +12,11 @@ class PaginateCdsFgService {
   ) {}
 
   async execute({
-    tipo, sigla, nome, current = 1, perPage = 15,
+    tipo, simbologia, current = 1, perPage = 15,
   }: PaginateCdsFgData): Promise<IPage<CdsFg>> {
     return this.cdsFgsRepository.paginate({
       tipo,
-      sigla,
-      nome,
+      simbologia,
       current,
       perPage,
     });

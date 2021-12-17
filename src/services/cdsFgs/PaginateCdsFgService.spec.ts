@@ -13,18 +13,16 @@ describe('PaginateCdsFg', () => {
   it('deve paginar CDS/FG', async () => {
     await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla1',
-      nome: 'nome1',
-      valor: 2000,
-      qtdVagas: 10,
+      simbologia: 'cdsFg1Simbologia',
+      remuneracao: 2000,
+      quantidadeVagas: 10,
     });
 
     const cdsFg2 = await fakeCdsFgsRepository.create({
       tipo: 'CDS',
-      sigla: 'sigla2',
-      nome: 'nome2',
-      valor: 3000,
-      qtdVagas: 5,
+      simbologia: 'cdsFg2Simbologia',
+      remuneracao: 3000,
+      quantidadeVagas: 5,
     });
 
     const page = await paginateCdsFgService.execute({ perPage: 1, current: 2 });
