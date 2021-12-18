@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+
 import { AppError } from '../../error/AppError';
 import { ICargosRepository } from '../../repositories/models/ICargosRepository';
 

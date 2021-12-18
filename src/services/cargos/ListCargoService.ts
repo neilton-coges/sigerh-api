@@ -11,9 +11,11 @@ class ListCargoService {
   ) {}
 
   async execute({
+    tipo,
     nome,
   }: ListCargoData): Promise<Cargo[]> {
     const cargos = await this.cargosRepository.list({
+      tipo,
       nome,
     });
 

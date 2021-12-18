@@ -15,8 +15,9 @@ class CargosRepository implements ICargosRepository {
     this.repository = getRepository(Cargo);
   }
 
-  async create({ nome }: CreateCargoData): Promise<Cargo> {
+  async create({ tipo, nome }: CreateCargoData): Promise<Cargo> {
     const cargo = this.repository.create({
+      tipo,
       nome,
     });
 
@@ -41,8 +42,14 @@ class CargosRepository implements ICargosRepository {
     });
   }
 
-  async list({ nome }: ListCargoData): Promise<Cargo[]> {
+  async list({ tipo, nome }: ListCargoData): Promise<Cargo[]> {
     const query = this.repository.createQueryBuilder();
+
+    if (tipo) {
+      query.andWhere({
+        tipo,
+      });
+    }
 
     if (nome) {
       query.andWhere({
@@ -53,11 +60,19 @@ class CargosRepository implements ICargosRepository {
     return query.getMany();
   }
 
-  async paginate({ nome, current, perPage }: PaginateCargoData): Promise<IPage<Cargo>> {
+  async paginate({
+    tipo, nome, current, perPage,
+  }: PaginateCargoData): Promise<IPage<Cargo>> {
     const skip = current * perPage - perPage;
     const take = perPage;
 
     const query = this.repository.createQueryBuilder();
+
+    if (tipo) {
+      query.andWhere({
+        tipo,
+      });
+    }
 
     if (nome) {
       query.andWhere({
