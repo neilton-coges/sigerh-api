@@ -2,13 +2,16 @@ import { Cargo } from '../../entities/Cargo';
 import { IPage } from './IPage';
 import { IPaginator } from './IPaginator';
 
-type CreateCargoData = Pick<Cargo, 'nome'>;
+type CreateCargoData = Pick<Cargo, 'tipo' |'nome'>;
+type UpdateCargoData = Pick<Cargo, 'id' | 'tipo' | 'nome'>;
 
 type ListCargoData = {
+  tipo?: string,
   nome?: string;
 }
 
 type PaginateCargoData = IPaginator & {
+  tipo?: string,
   nome?: string;
 }
 
@@ -23,5 +26,5 @@ interface ICargosRepository {
 }
 
 export {
-  CreateCargoData, ListCargoData, PaginateCargoData, ICargosRepository,
+  CreateCargoData, UpdateCargoData, ListCargoData, PaginateCargoData, ICargosRepository,
 };

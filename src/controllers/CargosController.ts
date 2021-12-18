@@ -9,6 +9,7 @@ import { ShowCargoService } from '../services/cargos/ShowCargoService';
 import { UpdateCargoService } from '../services/cargos/UpdateCargoService';
 
 type IndexRequestQuery = {
+  tipo?: string;
   nome?: string;
   isPaginate?: boolean;
   perPage?: number;
@@ -18,13 +19,14 @@ type IndexRequestQuery = {
 class CargosController {
   async index(request: Request, response: Response): Promise<Response> {
     const {
-      nome, isPaginate, perPage, current,
+      tipo, nome, isPaginate, perPage, current,
     } = request.query as IndexRequestQuery;
 
     if (isPaginate) {
       const paginateCargoService = container.resolve(PaginateCargoService);
 
       const page = await paginateCargoService.execute({
+        tipo,
         nome,
         current,
         perPage,
@@ -52,23 +54,24 @@ class CargosController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { nome } = request.body;
+    const { tipo, nome } = request.body;
 
     const createCargoService = container.resolve(CreateCargoService);
 
-    const cargo = await createCargoService.execute({ nome });
+    const cargo = await createCargoService.execute({ tipo, nome });
 
     return response.status(201).json(cargo);
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const { nome } = request.body;
+    const { tipo, nome } = request.body;
     const { id } = request.params;
 
     const updateCargoService = container.resolve(UpdateCargoService);
 
     const cargo = await updateCargoService.execute({
       id,
+      tipo,
       nome,
     });
 

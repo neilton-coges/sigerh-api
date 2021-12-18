@@ -1,3 +1,4 @@
+import { TipoCargo } from '../../entities/Cargo';
 import { FakeCargosRepository } from '../../repositories/fakes/FakeCargosRepository';
 import { PaginateCargoService } from './PaginateCargoService';
 
@@ -12,10 +13,12 @@ describe('PaginateCargo', () => {
 
   it('deve ser possível paginar cargos', async () => {
     const cargo1 = await fakeCargosRepository.create({
+      tipo: TipoCargo.COMISSAO,
       nome: 'cargo1',
     });
 
     await fakeCargosRepository.create({
+      tipo: TipoCargo.EFETIVO,
       nome: 'cargo2',
     });
 

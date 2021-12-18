@@ -11,7 +11,7 @@ class CreateCargoService {
     private cargosRepository: ICargosRepository,
   ) {}
 
-  async execute({ nome }: CreateCargoData): Promise<Cargo> {
+  async execute({ tipo, nome }: CreateCargoData): Promise<Cargo> {
     const cargoAlreadyExists = await this.cargosRepository.findByNome(nome);
 
     if (cargoAlreadyExists) {
@@ -19,6 +19,7 @@ class CreateCargoService {
     }
 
     const cargo = await this.cargosRepository.create({
+      tipo,
       nome,
     });
 

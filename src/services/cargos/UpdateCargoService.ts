@@ -2,12 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { Cargo } from '../../entities/Cargo';
 import { AppError } from '../../error/AppError';
-import { ICargosRepository } from '../../repositories/models/ICargosRepository';
-
-type UpdateRequestData = {
-  id: string;
-  nome: string;
-}
+import { ICargosRepository, UpdateCargoData } from '../../repositories/models/ICargosRepository';
 
 @injectable()
 class UpdateCargoService {
@@ -16,7 +11,7 @@ class UpdateCargoService {
     private cargosRepository: ICargosRepository,
   ) {}
 
-  async execute({ id, nome }: UpdateRequestData): Promise<Cargo> {
+  async execute({ id, tipo, nome }: UpdateCargoData): Promise<Cargo> {
     const cargo = await this.cargosRepository.findById(id);
 
     if (!cargo) {
@@ -30,6 +25,7 @@ class UpdateCargoService {
     }
 
     cargo.nome = nome;
+    cargo.tipo = tipo;
 
     await this.cargosRepository.update(cargo);
 

@@ -1,3 +1,4 @@
+import { TipoCargo } from '../../entities/Cargo';
 import { AppError } from '../../error/AppError';
 import { FakeCargosRepository } from '../../repositories/fakes/FakeCargosRepository';
 import { ShowCargoService } from './ShowCargoService';
@@ -13,7 +14,8 @@ describe('ShowCargo', () => {
 
   it('deve ser possível mostrar um cargo', async () => {
     const { id } = await fakeCargosRepository.create({
-      nome: 'nome',
+      tipo: TipoCargo.COMISSAO,
+      nome: 'cargoNome',
     });
 
     const cargo = await showCargoService.execute(id);
