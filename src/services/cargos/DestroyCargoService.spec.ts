@@ -1,3 +1,4 @@
+import { TipoCargo } from '../../entities/Cargo';
 import { AppError } from '../../error/AppError';
 import { FakeCargosRepository } from '../../repositories/fakes/FakeCargosRepository';
 import { DestroyCargoService } from './DestroyCargoService';
@@ -13,6 +14,7 @@ describe('DestroyCargo', () => {
 
   it('deve ser possível remover um cargo', async () => {
     const { id } = await fakeCargosRepository.create({
+      tipo: TipoCargo.COMISSAO,
       nome: 'cargo1',
     });
 
