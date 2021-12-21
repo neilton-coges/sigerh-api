@@ -1,10 +1,11 @@
 import { Column, Entity } from 'typeorm';
+
 import { BaseModel } from './BaseModel';
 
 enum TipoCargo {
-  EFETIVO,
-  COMISSAO,
-  FUNCAO_GRATIFICADA,
+  EFETIVO = 'EFETIVO',
+  COMISSAO = 'COMISSAO',
+  FUNCAO_GRATIFICADA = 'FUNCAO_GRATIFICADA',
 }
 
 @Entity('cargos')
