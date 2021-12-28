@@ -26,7 +26,8 @@ describe('CreateNomeacao', () => {
   it('deve ser possível criar uma nomeacão', async () => {
     const cargo = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargo1Nome',
+      descricao: 'cargo1Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     const nomeacao = await createNomeacaoService.execute({
@@ -46,12 +47,14 @@ describe('CreateNomeacao', () => {
   it('não deve ser possível criar mais de uma nomeação com cargo do tipo EFETIVO para um determinado servidor', async () => {
     const cargoEfetivo1 = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargo1Nome',
+      descricao: 'cargo1Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     const cargoEfetivo2 = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargo2Nome',
+      descricao: 'cargo2Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     await fakeLotacoesRepository.create({
@@ -79,12 +82,14 @@ describe('CreateNomeacao', () => {
   it('não deve ser possível criar mais de uma nomeação com cargo do tipo COMISSAO para um determinado servidor', async () => {
     const cargoComissao1 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargo1Nome',
+      descricao: 'cargo1Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     const cargoComissao2 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargo2Nome',
+      descricao: 'cargo2Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     await fakeLotacoesRepository.create({
@@ -112,12 +117,14 @@ describe('CreateNomeacao', () => {
   it('não deve ser possível criar mais de uma nomeação com cargo do tipo FUNCÃO GRATIFICADA para um determinado servidor', async () => {
     const cargoFg1 = await fakeCargosRepository.create({
       tipo: TipoCargo.FUNCAO_GRATIFICADA,
-      nome: 'cargo1Nome',
+      descricao: 'cargo1Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     const cargoFg2 = await fakeCargosRepository.create({
       tipo: TipoCargo.FUNCAO_GRATIFICADA,
-      nome: 'cargo2Nome',
+      descricao: 'cargo2Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     await fakeLotacoesRepository.create({

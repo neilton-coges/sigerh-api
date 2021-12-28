@@ -10,7 +10,7 @@ import { UpdateCargoService } from '../services/cargos/UpdateCargoService';
 
 type IndexRequestQuery = {
   tipo?: string;
-  nome?: string;
+  descricao?: string;
   isPaginate?: boolean;
   perPage?: number;
   current?: number;
@@ -19,7 +19,7 @@ type IndexRequestQuery = {
 class CargosController {
   async index(request: Request, response: Response): Promise<Response> {
     const {
-      tipo, nome, isPaginate, perPage, current,
+      tipo, descricao, isPaginate, perPage, current,
     } = request.query as IndexRequestQuery;
 
     if (isPaginate) {
@@ -27,7 +27,7 @@ class CargosController {
 
       const page = await paginateCargoService.execute({
         tipo,
-        nome,
+        descricao,
         current,
         perPage,
       });
@@ -37,7 +37,7 @@ class CargosController {
     const listCargoService = container.resolve(ListCargoService);
 
     const cargos = await listCargoService.execute({
-      nome,
+      descricao,
     });
 
     return response.json(cargos);
@@ -54,17 +54,17 @@ class CargosController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { tipo, nome } = request.body;
+    const { tipo, descricao, nivelCargoId } = request.body;
 
     const createCargoService = container.resolve(CreateCargoService);
 
-    const cargo = await createCargoService.execute({ tipo, nome });
+    const cargo = await createCargoService.execute({ tipo, descricao, nivelCargoId });
 
     return response.status(201).json(cargo);
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const { tipo, nome } = request.body;
+    const { tipo, descricao, nivelCargoId } = request.body;
     const { id } = request.params;
 
     const updateCargoService = container.resolve(UpdateCargoService);
@@ -72,7 +72,8 @@ class CargosController {
     const cargo = await updateCargoService.execute({
       id,
       tipo,
-      nome,
+      descricao,
+      nivelCargoId,
     });
 
     return response.json(cargo);

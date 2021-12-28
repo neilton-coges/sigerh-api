@@ -11,16 +11,17 @@ class CreateCargoService {
     private cargosRepository: ICargosRepository,
   ) {}
 
-  async execute({ tipo, nome }: CreateCargoData): Promise<Cargo> {
-    const cargoAlreadyExists = await this.cargosRepository.findByNome(nome);
+  async execute({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
+    const cargoAlreadyExists = await this.cargosRepository.findByDescricao(descricao);
 
     if (cargoAlreadyExists) {
-      throw new AppError('Já existe um cargo com este nome.');
+      throw new AppError('Já existe um cargo com esta descrição.');
     }
 
     const cargo = await this.cargosRepository.create({
       tipo,
-      nome,
+      descricao,
+      nivelCargoId,
     });
 
     return cargo;

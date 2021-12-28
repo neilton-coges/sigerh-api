@@ -30,7 +30,6 @@ class CreateNomeacaoService {
           TipoCargo.EFETIVO,
         );
 
-      console.log(lotacaoWithCargoEfetivoExits);
       if (lotacaoWithCargoEfetivoExits) {
         throw new AppError('Este servidor já possui uma lotação com cargo efetivo.');
       }

@@ -14,21 +14,24 @@ describe('CreateCargo', () => {
   it('deve ser possível criar um novo cargo', async () => {
     const cargo = await createCargoService.execute({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargoNome',
+      descricao: 'cargoDescricao',
+      nivelCargoId: '',
     });
 
     expect(cargo).toHaveProperty('id');
   });
 
-  it('não dev ser possível criar um novo cargo com nome já existente', async () => {
+  it('não deve ser possível criar um novo cargo com descrição já existente', async () => {
     await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargoNomeExistente',
+      descricao: 'cargoDescricaoExistente',
+      nivelCargoId: '',
     });
 
     await expect(createCargoService.execute({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargoNomeExistente',
+      descricao: 'cargoDescricaoExistente',
+      nivelCargoId: 'cargoNivelCargoId',
     })).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -10,25 +10,20 @@ const cargosController = new CargosController();
 const bodyValidation = {
   [Segments.BODY]: {
     tipo: Joi.string().valid(...Object.keys(TipoCargo)).required(),
-    nome: Joi.string().required(),
-  },
-};
-
-const queryValidation = {
-  [Segments.QUERY]: {
-    isPaginate: Joi.boolean(),
-    perPage: Joi.number().positive(),
-    currente: Joi.number().positive(),
-    tipo: Joi.string().valid(...Object.keys(TipoCargo)),
-    nome: Joi.string().allow(null, ''),
+    descricao: Joi.string().required(),
+    nivelCargoId: Joi
+      .alternatives()
+      .conditional('tipo', {
+        is: TipoCargo.EFETIVO,
+        then: Joi.string().required(),
+      }),
   },
 };
 
 const createValidation = celebrate(bodyValidation);
 const updateValidation = celebrate(bodyValidation);
-const indexValitation = celebrate(queryValidation);
 
-cargosRoutes.get('/', indexValitation, cargosController.index);
+cargosRoutes.get('/', cargosController.index);
 cargosRoutes.get('/:id', cargosController.show);
 cargosRoutes.post('/', createValidation, cargosController.create);
 cargosRoutes.put('/:id', updateValidation, cargosController.update);

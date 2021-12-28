@@ -7,10 +7,14 @@ import { IPage } from '../models/IPage';
 class FakeCargosRepository implements ICargosRepository {
   private cargos: Cargo[] = [];
 
-  async create({ tipo, nome }: CreateCargoData): Promise<Cargo> {
+  async create({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
     const cargo = new Cargo();
 
-    Object.assign(cargo, { tipo, nome });
+    Object.assign(cargo, {
+      tipo,
+      descricao,
+      nivelCargoId,
+    });
 
     this.cargos.push(cargo);
 
@@ -31,18 +35,18 @@ class FakeCargosRepository implements ICargosRepository {
     this.cargos.splice(index, 1);
   }
 
-  async list({ tipo, nome }: ListCargoData): Promise<Cargo[]> {
+  async list({ tipo, descricao }: ListCargoData): Promise<Cargo[]> {
     let data = [...this.cargos];
 
-    if (tipo || nome) {
+    if (tipo || descricao) {
       data = data.filter(
-        (item) => item.tipo.toString().includes(tipo) || item.nome.includes(nome),
+        (item) => item.tipo.toString().includes(tipo) || item.descricao.includes(descricao),
       );
     }
 
-    if (tipo && nome) {
+    if (tipo && descricao) {
       data = data.filter(
-        (item) => item.tipo.toString().includes(tipo) && item.nome.includes(nome),
+        (item) => item.tipo.toString().includes(tipo) && item.descricao.includes(descricao),
       );
     }
 
@@ -50,22 +54,22 @@ class FakeCargosRepository implements ICargosRepository {
   }
 
   async paginate({
-    tipo, nome, current, perPage,
+    tipo, descricao, current, perPage,
   }: PaginateCargoData): Promise<IPage<Cargo>> {
     const skip = current * perPage - perPage;
     const take = skip + perPage;
 
     let data = [...this.cargos];
 
-    if (tipo || nome) {
+    if (tipo || descricao) {
       data = data.filter(
-        (item) => item.tipo.toString().includes(tipo) || item.nome.includes(nome),
+        (item) => item.tipo.toString().includes(tipo) || item.descricao.includes(descricao),
       );
     }
 
-    if (tipo && nome) {
+    if (tipo && descricao) {
       data = data.filter(
-        (item) => item.tipo.toString().includes(tipo) && item.nome.includes(nome),
+        (item) => item.tipo.toString().includes(tipo) && item.descricao.includes(descricao),
       );
     }
 
@@ -87,8 +91,8 @@ class FakeCargosRepository implements ICargosRepository {
     return this.cargos.find((item) => item.id === id);
   }
 
-  async findByNome(nome: string): Promise<Cargo> {
-    return this.cargos.find((item) => item.nome.includes(nome));
+  async findByDescricao(descricao: string): Promise<Cargo> {
+    return this.cargos.find((item) => item.descricao.includes(descricao));
   }
 }
 

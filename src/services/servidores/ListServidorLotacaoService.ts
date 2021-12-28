@@ -11,8 +11,6 @@ class ListServidorLotacaoService {
   ) {}
 
   async execute(servidorId: string): Promise<Lotacao[]> {
-    console.log(servidorId);
-
     const lotacoes = await this.lotacoesRepository.findByServidorId(servidorId);
 
     return lotacoes;

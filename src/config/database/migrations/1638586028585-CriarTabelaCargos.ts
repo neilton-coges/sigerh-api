@@ -16,9 +16,14 @@ export class CriarTabelaCargos1638586028585 implements MigrationInterface {
           enum: ['EFETIVO', 'COMISSAO', 'FUNCAO_GRATIFICADA'],
         },
         {
-          name: 'nome',
+          name: 'descricao',
           type: 'varchar',
           isUnique: true,
+        },
+        {
+          name: 'nivel_cargo_id',
+          type: 'uuid',
+          isNullable: true,
         },
         {
           name: 'created_at',

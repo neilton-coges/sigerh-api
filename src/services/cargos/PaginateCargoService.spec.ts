@@ -14,12 +14,14 @@ describe('PaginateCargo', () => {
   it('deve ser possível paginar cargos', async () => {
     const cargo1 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargo1',
+      descricao: 'cargo1Descricao',
+      nivelCargoId: '',
     });
 
     await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargo2',
+      descricao: 'cargo2Descricao',
+      nivelCargoId: 'nivelCargoId',
     });
 
     const page = await paginateCargoService.execute({

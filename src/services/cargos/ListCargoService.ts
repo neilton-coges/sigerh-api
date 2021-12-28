@@ -12,11 +12,11 @@ class ListCargoService {
 
   async execute({
     tipo,
-    nome,
+    descricao,
   }: ListCargoData): Promise<Cargo[]> {
     const cargos = await this.cargosRepository.list({
       tipo,
-      nome,
+      descricao,
     });
 
     return cargos;

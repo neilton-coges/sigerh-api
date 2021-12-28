@@ -11,10 +11,13 @@ enum TipoCargo {
 @Entity('cargos')
 class Cargo extends BaseModel {
   @Column()
-  nome: string;
+  tipo: TipoCargo;
 
   @Column()
-  tipo: TipoCargo;
+  descricao: string;
+
+  @Column({ name: 'nivel_cargo_id' })
+  nivelCargoId: string;
 }
 
 export { TipoCargo, Cargo };
