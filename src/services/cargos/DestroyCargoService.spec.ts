@@ -15,7 +15,8 @@ describe('DestroyCargo', () => {
   it('deve ser possível remover um cargo', async () => {
     const { id } = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargo1',
+      descricao: 'cargoDescricao',
+      nivelCargoId: '',
     });
 
     const destroy = jest.spyOn(fakeCargosRepository, 'destroy');

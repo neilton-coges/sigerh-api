@@ -12,11 +12,11 @@ class PaginateCargoService {
   ) {}
 
   async execute({
-    tipo, nome, perPage = 15, current = 1,
+    tipo, descricao, perPage = 15, current = 1,
   }: PaginateCargoData): Promise<IPage<Cargo>> {
     const page = await this.cargosRepository.paginate({
       tipo,
-      nome,
+      descricao,
       perPage,
       current,
     });

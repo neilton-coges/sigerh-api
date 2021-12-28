@@ -11,21 +11,24 @@ class UpdateCargoService {
     private cargosRepository: ICargosRepository,
   ) {}
 
-  async execute({ id, tipo, nome }: UpdateCargoData): Promise<Cargo> {
+  async execute({
+    id, tipo, descricao, nivelCargoId,
+  }: UpdateCargoData): Promise<Cargo> {
     const cargo = await this.cargosRepository.findById(id);
 
     if (!cargo) {
       throw new AppError('Cargo não encontrado.');
     }
 
-    const cargoAlreadyExists = await this.cargosRepository.findByNome(nome);
+    const cargoAlreadyExists = await this.cargosRepository.findByDescricao(descricao);
 
     if (cargoAlreadyExists && cargoAlreadyExists.id !== id) {
-      throw new AppError('Já existe um cargo com este nome.');
+      throw new AppError('Já existe um cargo com esta descrição.');
     }
 
-    cargo.nome = nome;
+    cargo.descricao = descricao;
     cargo.tipo = tipo;
+    cargo.nivelCargoId = nivelCargoId;
 
     await this.cargosRepository.update(cargo);
 

@@ -15,7 +15,8 @@ describe('ShowCargo', () => {
   it('deve ser possível mostrar um cargo', async () => {
     const { id } = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargoNome',
+      descricao: 'cargoDescricao',
+      nivelCargoId: '',
     });
 
     const cargo = await showCargoService.execute(id);

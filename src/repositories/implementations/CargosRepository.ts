@@ -15,10 +15,11 @@ class CargosRepository implements ICargosRepository {
     this.repository = getRepository(Cargo);
   }
 
-  async create({ tipo, nome }: CreateCargoData): Promise<Cargo> {
+  async create({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
     const cargo = this.repository.create({
       tipo,
-      nome,
+      descricao,
+      nivelCargoId,
     });
 
     return this.repository.save(cargo);
@@ -36,13 +37,13 @@ class CargosRepository implements ICargosRepository {
     return this.repository.findOne(id);
   }
 
-  async findByNome(nome: string): Promise<Cargo> {
+  async findByDescricao(descricao: string): Promise<Cargo> {
     return this.repository.findOne({
-      nome: ILike(`%${nome}%`),
+      descricao,
     });
   }
 
-  async list({ tipo, nome }: ListCargoData): Promise<Cargo[]> {
+  async list({ tipo, descricao }: ListCargoData): Promise<Cargo[]> {
     const query = this.repository.createQueryBuilder();
 
     if (tipo) {
@@ -51,9 +52,9 @@ class CargosRepository implements ICargosRepository {
       });
     }
 
-    if (nome) {
+    if (descricao) {
       query.andWhere({
-        nome: ILike(`%${nome}%`),
+        descricao: ILike(`%${descricao}%`),
       });
     }
 
@@ -61,7 +62,7 @@ class CargosRepository implements ICargosRepository {
   }
 
   async paginate({
-    tipo, nome, current, perPage,
+    tipo, descricao, current, perPage,
   }: PaginateCargoData): Promise<IPage<Cargo>> {
     const skip = current * perPage - perPage;
     const take = perPage;
@@ -74,9 +75,9 @@ class CargosRepository implements ICargosRepository {
       });
     }
 
-    if (nome) {
+    if (descricao) {
       query.andWhere({
-        nome: ILike(`%${nome}%`),
+        descricao: ILike(`%${descricao}%`),
       });
     }
 

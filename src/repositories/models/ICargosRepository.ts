@@ -2,17 +2,17 @@ import { Cargo } from '../../entities/Cargo';
 import { IPage } from './IPage';
 import { IPaginator } from './IPaginator';
 
-type CreateCargoData = Pick<Cargo, 'tipo' |'nome'>;
-type UpdateCargoData = Pick<Cargo, 'id' | 'tipo' | 'nome'>;
+type CreateCargoData = Pick<Cargo, 'tipo' | 'descricao' | 'nivelCargoId'>;
+type UpdateCargoData = Pick<Cargo, 'id' | 'tipo' | 'descricao' | 'nivelCargoId'>;
 
 type ListCargoData = {
   tipo?: string,
-  nome?: string;
+  descricao?: string;
 }
 
 type PaginateCargoData = IPaginator & {
   tipo?: string,
-  nome?: string;
+  descricao?: string;
 }
 
 interface ICargosRepository {
@@ -20,7 +20,7 @@ interface ICargosRepository {
   update(cargo: Cargo): Promise<Cargo>;
   destroy(id: string): Promise<void>;
   findById(id: string): Promise<Cargo>;
-  findByNome(nome: string): Promise<Cargo>;
+  findByDescricao(descricao: string): Promise<Cargo>;
   list(data: ListCargoData): Promise<Cargo[]>;
   paginate(data: PaginateCargoData): Promise<IPage<Cargo>>;
 }

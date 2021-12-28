@@ -14,12 +14,14 @@ describe('ListCargo', () => {
   it('deve ser possível listar cargos', async () => {
     const cargo1 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
-      nome: 'cargo1',
+      descricao: 'cargoDescricao',
+      nivelCargoId: '',
     });
 
     const cargo2 = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
-      nome: 'cargo2',
+      descricao: 'cargo2Descricao',
+      nivelCargoId: '',
     });
 
     const cargos = await listCargoService.execute({});
