@@ -15,5 +15,5 @@ export default {
   ],
   testMatch: ['**/*.spec.ts'],
   preset: 'ts-jest',
-  setupFiles: ['<rootDir>/jest.setup.js'],
+  setupFiles: ['<rootDir>/jest.setup.ts'],
 };
