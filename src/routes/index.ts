@@ -7,6 +7,8 @@ import { unidadesRoutes } from './unidades.routes';
 import { jornadasRoutes } from './jornadas.routes';
 import { servidoresRoutes } from './servidores.routes';
 import { nomeacoesRoutes } from './nomeacoes.routes';
+import { usuariosRoutes } from './usuarios.routes';
+import { sessoesRoutes } from './sessoes.routes';
 
 const routes = Router();
 
@@ -17,5 +19,7 @@ routes.use('/unidades', unidadesRoutes);
 routes.use('/jornadas', jornadasRoutes);
 routes.use('/servidores', servidoresRoutes);
 routes.use('/nomeacoes', nomeacoesRoutes);
+routes.use('/usuarios', usuariosRoutes);
+routes.use('/sessoes', sessoesRoutes);
 
 export { routes };
