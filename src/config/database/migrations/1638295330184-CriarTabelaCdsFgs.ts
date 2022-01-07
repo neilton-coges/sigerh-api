@@ -20,7 +20,7 @@ export class CriarTabelaCdsFgs1638295330184 implements MigrationInterface {
           type: 'varchar',
         },
         {
-          name: 'valor',
+          name: 'remuneracao',
           type: 'numeric',
         },
         {
