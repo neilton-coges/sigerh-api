@@ -13,7 +13,6 @@ export class CriarTabelaClassesNiveisCargos1640174806845 implements MigrationInt
         {
           name: 'codigo',
           type: 'varchar',
-          isUnique: true,
         },
         {
           name: 'descricao',
@@ -45,6 +44,6 @@ export class CriarTabelaClassesNiveisCargos1640174806845 implements MigrationInt
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tabela_classes_');
+    await queryRunner.dropTable('classes_niveis_cargos');
   }
 }

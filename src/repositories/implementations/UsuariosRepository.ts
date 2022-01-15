@@ -26,6 +26,10 @@ class UsuariosRepository implements IUsuariosRepository {
     return this.repository.save(usuario);
   }
 
+  async findById(id: string): Promise<Usuario> {
+    return this.repository.findOne(id);
+  }
+
   async findByServidorId(servidorId: string): Promise<Usuario> {
     return this.repository.findOne({ servidorId });
   }

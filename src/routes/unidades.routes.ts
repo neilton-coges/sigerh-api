@@ -2,6 +2,7 @@ import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 
 import { UnidadesController } from '../controllers/UnidadesController';
+import { is } from '../middlewares/acl';
 
 const unidadesRoutes = Router();
 const unidadesController = new UnidadesController();
@@ -18,9 +19,9 @@ const createValidation = celebrate(bodyValidation);
 const updateValidation = celebrate(bodyValidation);
 
 unidadesRoutes.get('/', unidadesController.index);
-unidadesRoutes.get('/:id', unidadesController.show);
-unidadesRoutes.post('/', createValidation, unidadesController.create);
-unidadesRoutes.put('/:id', updateValidation, unidadesController.update);
-unidadesRoutes.delete('/:id', unidadesController.destroy);
+unidadesRoutes.get('/:id', is(['ADMIN', 'EDITOR']), unidadesController.show);
+unidadesRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, unidadesController.create);
+unidadesRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateValidation, unidadesController.update);
+unidadesRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), unidadesController.destroy);
 
 export { unidadesRoutes };
