@@ -3,6 +3,7 @@ import { Router } from 'express';
 
 import { UsuariosController } from '../controllers/UsuariosController';
 import { TipoUsuario } from '../entities/Usuario';
+import { is } from '../middlewares/acl';
 
 const usuariosRoutes = Router();
 const usuariosController = new UsuariosController();
@@ -23,6 +24,6 @@ const createValidation = celebrate({
   },
 });
 
-usuariosRoutes.post('/', createValidation, usuariosController.create);
+usuariosRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, usuariosController.create);
 
 export { usuariosRoutes };

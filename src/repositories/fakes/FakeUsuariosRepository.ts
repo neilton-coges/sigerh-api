@@ -3,6 +3,8 @@ import { Usuario } from '../../entities/Usuario';
 import { CreateUsuarioData, IUsuariosRepository } from '../models/IUsuariosRepository';
 
 class FakeUsuariosRepository implements IUsuariosRepository {
+  private usuarios: Usuario[] = [];
+
   async findByLoginWithServidor(login: string): Promise<Usuario> {
     const usuario = this.usuarios.find((item) => item.login === login);
 
@@ -16,7 +18,9 @@ class FakeUsuariosRepository implements IUsuariosRepository {
     return usuario;
   }
 
-  private usuarios: Usuario[] = [];
+  async findById(id: string): Promise<Usuario> {
+    return this.usuarios.find((item) => item.id === id);
+  }
 
   async create({
     login,

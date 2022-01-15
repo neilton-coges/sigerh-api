@@ -3,6 +3,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import { CargosController } from '../controllers/CargosController';
 import { TipoCargo } from '../entities/Cargo';
+import { is } from '../middlewares/acl';
 
 const cargosRoutes = Router();
 const cargosController = new CargosController();
@@ -24,9 +25,9 @@ const createValidation = celebrate(bodyValidation);
 const updateValidation = celebrate(bodyValidation);
 
 cargosRoutes.get('/', cargosController.index);
-cargosRoutes.get('/:id', cargosController.show);
-cargosRoutes.post('/', createValidation, cargosController.create);
-cargosRoutes.put('/:id', updateValidation, cargosController.update);
-cargosRoutes.delete('/:id', cargosController.destroy);
+cargosRoutes.get('/:id', is(['ADMIN', 'EDITOR']), cargosController.show);
+cargosRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, cargosController.create);
+cargosRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateValidation, cargosController.update);
+cargosRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), cargosController.destroy);
 
 export { cargosRoutes };

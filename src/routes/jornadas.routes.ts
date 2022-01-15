@@ -1,6 +1,7 @@
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 import { JornadasController } from '../controllers/JornadasController';
+import { is } from '../middlewares/acl';
 
 const jornadasController = new JornadasController();
 const jornadasRoutes = Router();
@@ -19,9 +20,9 @@ const createValidation = celebrate(bodyValidation);
 const updateValtion = celebrate(bodyValidation);
 
 jornadasRoutes.get('/', jornadasController.index);
-jornadasRoutes.get('/:id', jornadasController.show);
-jornadasRoutes.post('/', createValidation, jornadasController.create);
-jornadasRoutes.put('/:id', updateValtion, jornadasController.update);
-jornadasRoutes.delete('/:id', jornadasController.destroy);
+jornadasRoutes.get('/:id', is(['ADMIN', 'EDITOR']), jornadasController.show);
+jornadasRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, jornadasController.create);
+jornadasRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateValtion, jornadasController.update);
+jornadasRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), jornadasController.destroy);
 
 export { jornadasRoutes };

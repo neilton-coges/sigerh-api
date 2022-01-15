@@ -9,17 +9,18 @@ import { servidoresRoutes } from './servidores.routes';
 import { nomeacoesRoutes } from './nomeacoes.routes';
 import { usuariosRoutes } from './usuarios.routes';
 import { sessoesRoutes } from './sessoes.routes';
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 
 const routes = Router();
 
-routes.use('/cds_fgs', cdsFgsRoutes);
-routes.use('/niveis_cargos', niveisCargosRoutes);
-routes.use('/cargos', cargosRoutes);
-routes.use('/unidades', unidadesRoutes);
-routes.use('/jornadas', jornadasRoutes);
-routes.use('/servidores', servidoresRoutes);
-routes.use('/nomeacoes', nomeacoesRoutes);
-routes.use('/usuarios', usuariosRoutes);
+routes.use('/cds_fgs', ensureAuthenticated, cdsFgsRoutes);
+routes.use('/niveis_cargos', ensureAuthenticated, niveisCargosRoutes);
+routes.use('/cargos', ensureAuthenticated, cargosRoutes);
+routes.use('/unidades', ensureAuthenticated, unidadesRoutes);
+routes.use('/jornadas', ensureAuthenticated, jornadasRoutes);
+routes.use('/servidores', ensureAuthenticated, servidoresRoutes);
+routes.use('/nomeacoes', ensureAuthenticated, nomeacoesRoutes);
+routes.use('/usuarios', ensureAuthenticated, usuariosRoutes);
 routes.use('/sessoes', sessoesRoutes);
 
 export { routes };

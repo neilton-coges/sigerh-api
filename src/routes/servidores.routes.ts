@@ -6,6 +6,7 @@ import { ServidoresLotacoesController } from '../controllers/ServidoresLotacoesC
 import {
   CorRaca, EstadoCivil, Genero, TipoSanguineo,
 } from '../entities/Servidor';
+import { is } from '../middlewares/acl';
 
 const servidoresRoutes = Router();
 const servidoresController = new ServidoresController();
@@ -54,13 +55,13 @@ const updateServidorLoatacaoValidation = celebrate({
   },
 });
 
-servidoresRoutes.get('/', servidoresController.index);
-servidoresRoutes.get('/:id', servidoresController.show);
-servidoresRoutes.post('/', createValidation, servidoresController.create);
-servidoresRoutes.put('/:id', updateValidation, servidoresController.update);
-servidoresRoutes.delete('/:id', servidoresController.destroy);
+servidoresRoutes.get('/', is(['ADMIN', 'EDITOR']), servidoresController.index);
+servidoresRoutes.get('/:id', is(['ADMIN', 'EDITOR']), servidoresController.show);
+servidoresRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, servidoresController.create);
+servidoresRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateValidation, servidoresController.update);
+servidoresRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), servidoresController.destroy);
 
 servidoresRoutes.get('/:servidorId/lotacoes', servidoresLotacoesController.index);
-servidoresRoutes.put('/:servidorId/lotacoes/:id', updateServidorLoatacaoValidation, servidoresLotacoesController.update);
+servidoresRoutes.put('/:servidorId/lotacoes/:id', is(['ADMIN', 'EDITOR']), updateServidorLoatacaoValidation, servidoresLotacoesController.update);
 
 export { servidoresRoutes };

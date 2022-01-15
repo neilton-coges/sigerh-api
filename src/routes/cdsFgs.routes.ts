@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Segments, Joi, celebrate } from 'celebrate';
 
 import { CdsFgsController } from '../controllers/CdsFgsController';
+import { is } from '../middlewares/acl';
 
 const cdsFgsRoutes = Router();
 const cdsFgsController = new CdsFgsController();
@@ -20,9 +21,9 @@ const createValidation = celebrate(bodyValidation);
 const updateValidation = celebrate(bodyValidation);
 
 cdsFgsRoutes.get('/', cdsFgsController.index);
-cdsFgsRoutes.get('/:id', cdsFgsController.show);
-cdsFgsRoutes.post('/', createValidation, cdsFgsController.create);
-cdsFgsRoutes.put('/:id', updateValidation, cdsFgsController.update);
-cdsFgsRoutes.delete('/:id', cdsFgsController.destroy);
+cdsFgsRoutes.get('/:id', is(['ADMIN', 'EDITOR']), cdsFgsController.show);
+cdsFgsRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, cdsFgsController.create);
+cdsFgsRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateValidation, cdsFgsController.update);
+cdsFgsRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), cdsFgsController.destroy);
 
 export { cdsFgsRoutes };

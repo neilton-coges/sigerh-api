@@ -1,6 +1,7 @@
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 import { NomeacoesController } from '../controllers/NomeacoesController';
+import { is } from '../middlewares/acl';
 
 const nomeacoesRoutes = Router();
 const nomeacoesController = new NomeacoesController();
@@ -18,7 +19,7 @@ const createValidation = celebrate({
   },
 });
 
-nomeacoesRoutes.get('/', nomeacoesController.index);
-nomeacoesRoutes.post('/', createValidation, nomeacoesController.create);
+nomeacoesRoutes.get('/', is(['ADMIN', 'EDITOR']), nomeacoesController.index);
+nomeacoesRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, nomeacoesController.create);
 
 export { nomeacoesRoutes };

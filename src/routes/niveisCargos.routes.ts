@@ -13,6 +13,7 @@ import {
 import {
   ReajustesClassesNiveisCargosController,
 } from '../controllers/ReajustesClassesNiveisCargosController';
+import { is } from '../middlewares/acl';
 
 const niveisCargosRoutes = Router();
 const niveisCargosController = new NiveisCargosController();
@@ -35,10 +36,10 @@ const updateNivelCargoValidation = celebrate(
 );
 
 niveisCargosRoutes.get('/', niveisCargosController.index);
-niveisCargosRoutes.get('/:id', niveisCargosController.show);
-niveisCargosRoutes.post('/', createNivelCargoValidation, niveisCargosController.create);
-niveisCargosRoutes.put('/:id', updateNivelCargoValidation, niveisCargosController.updated);
-niveisCargosRoutes.delete('/:id', niveisCargosController.destroy);
+niveisCargosRoutes.get('/:id', is(['ADMIN', 'EDITOR']), niveisCargosController.show);
+niveisCargosRoutes.post('/', is(['ADMIN', 'EDITOR']), createNivelCargoValidation, niveisCargosController.create);
+niveisCargosRoutes.put('/:id', is(['ADMIN', 'EDITOR']), updateNivelCargoValidation, niveisCargosController.updated);
+niveisCargosRoutes.delete('/:id', is(['ADMIN', 'EDITOR']), niveisCargosController.destroy);
 
 const classeNivelCargoBodyValidation = {
   [Segments.BODY]: {
@@ -56,24 +57,29 @@ const updateClasseNivelCargoValidation = celebrate(
 
 niveisCargosRoutes.get(
   '/:nivelCargoId/classes',
+  is(['ADMIN', 'EDITOR']),
   classesNiveisCargosController.index,
 );
 niveisCargosRoutes.get(
   '/:nivelCargoId/classes/:id',
+  is(['ADMIN', 'EDITOR']),
   classesNiveisCargosController.show,
 );
 niveisCargosRoutes.post(
   '/:nivelCargoId/classes',
+  is(['ADMIN', 'EDITOR']),
   createClasseNivelCargoValidation,
   classesNiveisCargosController.create,
 );
 niveisCargosRoutes.put(
   '/:nivelCargoId/classes/:id',
+  is(['ADMIN', 'EDITOR']),
   updateClasseNivelCargoValidation,
   classesNiveisCargosController.update,
 );
 niveisCargosRoutes.delete(
   '/:nivelCargoId/classes/:id',
+  is(['ADMIN', 'EDITOR']),
   classesNiveisCargosController.destroy,
 );
 
@@ -93,28 +99,33 @@ const updatePadraoClasseNivelCargoValidation = celebrate({
 
 niveisCargosRoutes.get(
   '/:nivelCargoId/classes/:classeNivelCargoId/padroes',
+  is(['ADMIN', 'EDITOR']),
   padroesClassesNiveisCargosController.index,
 );
 
 niveisCargosRoutes.get(
   '/:nivelCargoId/classes/:classeNivelCargoId/padroes/:id',
+  is(['ADMIN', 'EDITOR']),
   padroesClassesNiveisCargosController.show,
 );
 
 niveisCargosRoutes.post(
   '/:nivelCargoId/classes/:classeNivelCargoId/padroes/',
+  is(['ADMIN', 'EDITOR']),
   createPadraoClasseNivelCargoValidation,
   padroesClassesNiveisCargosController.create,
 );
 
 niveisCargosRoutes.put(
   '/:nivelCargoId/classes/:classeNivelCargoId/padroes/:id',
+  is(['ADMIN', 'EDITOR']),
   updatePadraoClasseNivelCargoValidation,
   padroesClassesNiveisCargosController.update,
 );
 
 niveisCargosRoutes.delete(
   '/:nivelCargoId/classes/:classeNivelCargoId/padroes/:id',
+  is(['ADMIN', 'EDITOR']),
   padroesClassesNiveisCargosController.destroy,
 );
 
@@ -131,17 +142,20 @@ const createReajusteClasseNivelCargoValidation = celebrate(
 
 niveisCargosRoutes.get(
   '/:nivelCargoId/classes/:classeNivelCargoId/reajustes',
+  is(['ADMIN', 'EDITOR']),
   reajustesClassesNiveisCargosController.index,
 );
 
 niveisCargosRoutes.post(
   '/:nivelCargoId/classes/:classeNivelCargoId/reajustes',
+  is(['ADMIN', 'EDITOR']),
   createReajusteClasseNivelCargoValidation,
   reajustesClassesNiveisCargosController.create,
 );
 
 niveisCargosRoutes.delete(
   '/:nivelCargoId/classes/:classeNivelCargoId/reajustes/:id',
+  is(['ADMIN', 'EDITOR']),
   reajustesClassesNiveisCargosController.destroy,
 );
 

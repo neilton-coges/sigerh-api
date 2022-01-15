@@ -13,7 +13,6 @@ export class CriarTabelaPadroesClassesNiveisCargos1640175078642 implements Migra
         {
           name: 'codigo',
           type: 'varchar',
-          isUnique: true,
         },
         {
           name: 'descricao',
