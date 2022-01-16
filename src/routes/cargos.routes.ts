@@ -17,6 +17,7 @@ const bodyValidation = {
       .conditional('tipo', {
         is: TipoCargo.EFETIVO,
         then: Joi.string().required(),
+        otherwise: Joi.string().allow(null, ''),
       }),
   },
 };
