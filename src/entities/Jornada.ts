@@ -6,7 +6,7 @@ import { JornadaHora } from './JornadaHora';
 @Entity('jornadas')
 class Jornada extends BaseModel {
   @Column()
-  nome: string;
+  descricao: string;
 
   @OneToMany(() => JornadaHora, (jornada) => jornada.jornada, { cascade: true, persistence: true })
   horas: JornadaHora[];

@@ -1,7 +1,7 @@
 import { Jornada } from '../../entities/Jornada';
 import { JornadaHora } from '../../entities/JornadaHora';
 
-type CreateJornadaData = Pick<Jornada, 'nome'> & {
+type CreateJornadaData = Pick<Jornada, 'descricao'> & {
   horas: Array<Pick<JornadaHora, 'horaInicio' | 'horaFim'>>
 };
 

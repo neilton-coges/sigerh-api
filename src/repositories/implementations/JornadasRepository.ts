@@ -10,9 +10,9 @@ class JornadasRepository implements IJornadasRepository {
     this.repository = getRepository(Jornada);
   }
 
-  async create({ nome, horas }: CreateJornadaData): Promise<Jornada> {
+  async create({ descricao, horas }: CreateJornadaData): Promise<Jornada> {
     const jornada = this.repository.create({
-      nome,
+      descricao,
       horas,
     });
 

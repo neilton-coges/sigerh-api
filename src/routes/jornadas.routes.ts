@@ -8,7 +8,7 @@ const jornadasRoutes = Router();
 
 const bodyValidation = {
   [Segments.BODY]: {
-    nome: Joi.string().required(),
+    descricao: Joi.string().required(),
     horas: Joi.array().items(Joi.object({
       horaInicio: Joi.string().required(),
       horaFim: Joi.string().required(),

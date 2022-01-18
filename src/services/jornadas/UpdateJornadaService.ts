@@ -7,7 +7,7 @@ import { IJornadasRepository } from '../../repositories/models/IJornadasReposito
 
 type UpdateRequestData = {
   id: string;
-  nome: string;
+  descricao: string;
   horas: Array<{
     horaInicio: string;
     horaFim: string;
@@ -21,7 +21,7 @@ class UpdateJornadaService {
     private jornadasRepository: IJornadasRepository,
   ) {}
 
-  async execute({ id, nome, horas }: UpdateRequestData): Promise<Jornada> {
+  async execute({ id, descricao, horas }: UpdateRequestData): Promise<Jornada> {
     const jornada = await this.jornadasRepository.findByIdWithHoras(id);
 
     if (!jornada) {
@@ -38,7 +38,7 @@ class UpdateJornadaService {
       return hora;
     });
 
-    jornada.nome = nome;
+    jornada.descricao = descricao;
     jornada.horas = horasObject;
 
     await this.jornadasRepository.update(jornada);

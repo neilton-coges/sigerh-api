@@ -13,7 +13,7 @@ describe('UpdateJornada', () => {
 
   it('deve ser possível atualizar uma jornada', async () => {
     const { id } = await fakeJornadasRepository.create({
-      nome: 'nome',
+      descricao: 'descricao',
       horas: [
         {
           horaInicio: '07:00:00',
@@ -24,7 +24,7 @@ describe('UpdateJornada', () => {
 
     const jornadaUpdated = await updateJornadaService.execute({
       id,
-      nome: 'updatedNome',
+      descricao: 'updatedDescricao',
       horas: [
         {
           horaInicio: '07:00:00',
@@ -37,7 +37,7 @@ describe('UpdateJornada', () => {
       ],
     });
 
-    expect(jornadaUpdated.nome).toBe('updatedNome');
+    expect(jornadaUpdated.descricao).toBe('updatedNome');
     expect(jornadaUpdated.horas).toHaveLength(2);
   });
 
@@ -45,7 +45,7 @@ describe('UpdateJornada', () => {
     await expect(
       updateJornadaService.execute({
         id: 'inexistente',
-        nome: 'qualquer',
+        descricao: 'qualquer',
         horas: [],
       }),
     ).rejects.toBeInstanceOf(AppError);

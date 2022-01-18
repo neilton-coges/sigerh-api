@@ -9,9 +9,9 @@ class CreateJornadaService {
     private jornadasRepository: IJornadasRepository,
   ) {}
 
-  async execute({ nome, horas }: CreateJornadaData): Promise<Jornada> {
+  async execute({ descricao, horas }: CreateJornadaData): Promise<Jornada> {
     const jornada = await this.jornadasRepository.create({
-      nome,
+      descricao,
       horas,
     });
 

@@ -11,7 +11,7 @@ export class CriarTabelaJornadas1639000680661 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: 'nome',
+          name: 'descricao',
           type: 'varchar',
         },
         {

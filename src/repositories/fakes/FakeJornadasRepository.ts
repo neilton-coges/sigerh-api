@@ -4,11 +4,11 @@ import { CreateJornadaData, IJornadasRepository } from '../models/IJornadasRepos
 class FakeJornadasRepository implements IJornadasRepository {
   private jornadas: Jornada[] = [];
 
-  async create({ nome, horas }: CreateJornadaData): Promise<Jornada> {
+  async create({ descricao, horas }: CreateJornadaData): Promise<Jornada> {
     const jornada = new Jornada();
 
     Object.assign(jornada, {
-      nome,
+      descricao,
       horas,
     });
 

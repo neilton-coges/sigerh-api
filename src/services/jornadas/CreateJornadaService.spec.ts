@@ -12,7 +12,7 @@ describe('CreateJornada', () => {
 
   it('deve ser possível criar uma nova jornada', async () => {
     const jornada = await createJornadaService.execute({
-      nome: 'nome',
+      descricao: 'descricao',
       horas: [
         {
           horaInicio: '07:30:00',

@@ -27,12 +27,12 @@ class JornadasController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { nome, horas } = request.body;
+    const { descricao, horas } = request.body;
 
     const createJornadaService = container.resolve(CreateJornadaService);
 
     const jornada = await createJornadaService.execute({
-      nome,
+      descricao,
       horas,
     });
 
@@ -41,13 +41,13 @@ class JornadasController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { nome, horas } = request.body;
+    const { descricao, horas } = request.body;
 
     const updateJornadaService = container.resolve(UpdateJornadaService);
 
     const jornada = await updateJornadaService.execute({
       id,
-      nome,
+      descricao,
       horas,
     });
 
