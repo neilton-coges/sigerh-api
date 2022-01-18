@@ -13,7 +13,7 @@ describe('DestroyJornada', () => {
 
   it('deve ser possível remover uma jornada', async () => {
     const { id } = await fakeJornadasRepository.create({
-      nome: 'nome',
+      descricao: 'descricao',
       horas: [
         { horaInicio: '07:00:00', horaFim: '12:00:00' },
       ],

@@ -12,7 +12,7 @@ describe('ListJornada', () => {
 
   it('deve ser possível listar jornadas', async () => {
     const jornada1 = await fakeJornadasRepository.create({
-      nome: 'jornada1',
+      descricao: 'jornada1',
       horas: [
         { horaInicio: '07:00:00', horaFim: '12:00:00' },
         { horaInicio: '14:00:00', horaFim: ':1800:00' },
@@ -20,7 +20,7 @@ describe('ListJornada', () => {
     });
 
     const jornada2 = await fakeJornadasRepository.create({
-      nome: 'jornada2',
+      descricao: 'jornada2',
       horas: [
         { horaInicio: '07:00:00', horaFim: '12:00:00' },
         { horaInicio: '13:00:00', horaFim: '17:00:00' },

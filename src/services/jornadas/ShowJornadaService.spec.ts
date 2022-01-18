@@ -13,7 +13,7 @@ describe('ShowJornada', () => {
 
   it('deve ser possível mostrar uma jornada', async () => {
     const { id } = await fakeJornadasRepository.create({
-      nome: 'nome',
+      descricao: 'descricao',
       horas: [
         { horaInicio: '07:00:00', horaFim: '12:00:00' },
       ],
@@ -21,7 +21,7 @@ describe('ShowJornada', () => {
 
     const jornada = await showJornadaService.execute(id);
 
-    expect(jornada.nome).toBe('nome');
+    expect(jornada.descricao).toBe('descricao');
     expect(jornada.horas).toContainEqual({ horaInicio: '07:00:00', horaFim: '12:00:00' });
   });
 

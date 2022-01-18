@@ -37,7 +37,7 @@ describe('UpdateJornada', () => {
       ],
     });
 
-    expect(jornadaUpdated.descricao).toBe('updatedNome');
+    expect(jornadaUpdated.descricao).toBe('updatedDescricao');
     expect(jornadaUpdated.horas).toHaveLength(2);
   });
 
