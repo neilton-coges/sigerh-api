@@ -14,24 +14,24 @@ describe('UpdateUnidade', () => {
   it('deve ser possível atualizar uma unidade', async () => {
     const { id } = await fakeUnidadesRepository.create({
       sigla: 'sigla',
-      nome: 'nome',
+      descricao: 'descricao',
     });
 
     const unidadeUpdated = await updateUnidadeService.execute({
       id,
       sigla: 'siglaAtualizada',
-      nome: 'nomeAtualizado',
+      descricao: 'descricaoAtualizado',
     });
 
     expect(unidadeUpdated.sigla).toBe('siglaAtualizada');
-    expect(unidadeUpdated.nome).toBe('nomeAtualizado');
+    expect(unidadeUpdated.descricao).toBe('nomeAtualizado');
   });
 
   it('não deve ser possível atualizar uma unidade inexistente', async () => {
     await expect(
       updateUnidadeService.execute({
         id: 'inexistente',
-        nome: 'nome',
+        descricao: 'descricao',
         sigla: 'sigla',
       }),
     ).rejects.toBeInstanceOf(AppError);

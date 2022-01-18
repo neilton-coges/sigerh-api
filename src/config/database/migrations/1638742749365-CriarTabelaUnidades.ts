@@ -15,7 +15,7 @@ export class CriarTabelaUnidades1638742749365 implements MigrationInterface {
           type: 'varchar',
         },
         {
-          name: 'nome',
+          name: 'descricao',
           type: 'varchar',
         },
         {

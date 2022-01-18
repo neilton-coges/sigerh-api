@@ -1,6 +1,7 @@
 import {
-  Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany,
+  Column, Entity, JoinColumn, ManyToOne, OneToMany,
 } from 'typeorm';
+
 import { BaseModel } from './BaseModel';
 
 @Entity('unidades')
@@ -9,7 +10,7 @@ class Unidade extends BaseModel {
   sigla: string;
 
   @Column()
-  nome: string;
+  descricao: string;
 
   @Column({ name: 'unidade_pai_id' })
   unidadePaiId: string;

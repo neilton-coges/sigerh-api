@@ -8,12 +8,12 @@ import {
 class FakeUnidadesRepository implements IUnidadesRepository {
   private unidades: Unidade[] = [];
 
-  async create({ sigla, nome, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
+  async create({ sigla, descricao, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
     const unidade = new Unidade();
 
     Object.assign(unidade, {
       sigla,
-      nome,
+      descricao,
       unidadePaiId,
     });
 
@@ -36,34 +36,38 @@ class FakeUnidadesRepository implements IUnidadesRepository {
     this.unidades.splice(index, 1);
   }
 
-  async list({ sigla, nome }: ListUnidadeData): Promise<Unidade[]> {
+  async list({ sigla, descricao }: ListUnidadeData): Promise<Unidade[]> {
     let data = [...this.unidades];
 
-    if (sigla || nome) {
-      data = this.unidades.filter((item) => item.sigla.includes(sigla) || item.nome.includes(nome));
+    if (sigla || descricao) {
+      data = this.unidades.filter((item) => item.sigla.includes(sigla)
+        || item.descricao.includes(descricao));
     }
 
-    if (sigla && nome) {
-      data = this.unidades.filter((item) => item.sigla.includes(sigla) && item.nome.includes(nome));
+    if (sigla && descricao) {
+      data = this.unidades.filter((item) => item.sigla.includes(sigla)
+        && item.descricao.includes(descricao));
     }
 
     return data;
   }
 
   async paginate({
-    sigla, nome, perPage, current,
+    sigla, descricao, perPage, current,
   }: PaginateUnidadeData): Promise<IPage<Unidade>> {
     const skip = current * perPage - perPage;
     const take = skip + perPage;
 
     let data = [...this.unidades];
 
-    if (sigla || nome) {
-      data = data.filter((item) => item.sigla.includes(sigla) || item.nome.includes(nome));
+    if (sigla || descricao) {
+      data = data.filter((item) => item.sigla.includes(sigla)
+        || item.descricao.includes(descricao));
     }
 
-    if (sigla && nome) {
-      data = data.filter((item) => item.sigla.includes(sigla) && item.nome.includes(nome));
+    if (sigla && descricao) {
+      data = data.filter((item) => item.sigla.includes(sigla)
+        && item.descricao.includes(descricao));
     }
 
     const size = data.length;

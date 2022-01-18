@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+
 import { Unidade } from '../../entities/Unidade';
 import { AppError } from '../../error/AppError';
 import { CreateUnidadeData, IUnidadesRepository } from '../../repositories/models/IUnidadesRepository';
@@ -10,7 +11,7 @@ class CreateUnidadeService {
     private unidadesRepository: IUnidadesRepository,
   ) {}
 
-  async execute({ sigla, nome, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
+  async execute({ sigla, descricao, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
     if (unidadePaiId) {
       const unidadePaiExists = await this.unidadesRepository.findById(unidadePaiId);
 
@@ -21,7 +22,7 @@ class CreateUnidadeService {
 
     const unidade = await this.unidadesRepository.create({
       sigla,
-      nome,
+      descricao,
       unidadePaiId,
     });
 

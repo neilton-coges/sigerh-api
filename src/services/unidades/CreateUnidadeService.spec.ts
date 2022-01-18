@@ -13,7 +13,7 @@ describe('CreateUnidade', () => {
 
   it('deve ser possível criar uma nova unidade', async () => {
     const unidade = await createUnidadeService.execute({
-      nome: 'nome',
+      descricao: 'descricao',
       sigla: 'sigla',
     });
 
@@ -24,7 +24,7 @@ describe('CreateUnidade', () => {
     await expect(
       createUnidadeService.execute({
         sigla: 'sigla',
-        nome: 'nome',
+        descricao: 'descricao',
         unidadePaiId: 'inexistente',
       }),
     ).rejects.toBeInstanceOf(AppError);

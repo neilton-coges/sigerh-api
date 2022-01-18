@@ -1,6 +1,7 @@
 import {
-  getRepository, ILike, IsNull, Repository,
+  getRepository, ILike, Repository,
 } from 'typeorm';
+
 import { Unidade } from '../../entities/Unidade';
 import { IPage } from '../models/IPage';
 import {
@@ -14,10 +15,10 @@ class UnidadesRepository implements IUnidadesRepository {
     this.repository = getRepository(Unidade);
   }
 
-  async create({ sigla, nome, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
+  async create({ sigla, descricao, unidadePaiId }: CreateUnidadeData): Promise<Unidade> {
     const unidade = this.repository.create({
       sigla,
-      nome,
+      descricao,
       unidadePaiId,
     });
 
@@ -34,7 +35,7 @@ class UnidadesRepository implements IUnidadesRepository {
     await this.repository.delete(id);
   }
 
-  async list({ sigla, nome }: ListUnidadeData): Promise<Unidade[]> {
+  async list({ sigla, descricao }: ListUnidadeData): Promise<Unidade[]> {
     const query = this.repository.createQueryBuilder();
 
     if (sigla) {
@@ -43,9 +44,9 @@ class UnidadesRepository implements IUnidadesRepository {
       });
     }
 
-    if (nome) {
+    if (descricao) {
       query.andWhere({
-        nome: ILike(`%${nome}%`),
+        descricao: ILike(`%${descricao}%`),
       });
     }
 
@@ -57,7 +58,7 @@ class UnidadesRepository implements IUnidadesRepository {
   }
 
   async paginate({
-    sigla, nome, perPage, current,
+    sigla, descricao, perPage, current,
   }: PaginateUnidadeData): Promise<IPage<Unidade>> {
     const skip = current * perPage - perPage;
     const take = perPage;
@@ -70,9 +71,9 @@ class UnidadesRepository implements IUnidadesRepository {
       });
     }
 
-    if (nome) {
+    if (descricao) {
       query.andWhere({
-        nome: ILike(`%${nome}%`),
+        descricao: ILike(`%${descricao}%`),
       });
     }
 

@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+
 import { Unidade } from '../../entities/Unidade';
 import { IPage } from '../../repositories/models/IPage';
 import { IUnidadesRepository, PaginateUnidadeData } from '../../repositories/models/IUnidadesRepository';
@@ -11,11 +12,11 @@ class PaginateUnidadeService {
   ) {}
 
   async execute({
-    sigla, nome, perPage = 15, current = 1,
+    sigla, descricao, perPage = 15, current = 1,
   }: PaginateUnidadeData): Promise<IPage<Unidade>> {
     const page = await this.unidadesRepository.paginate({
       sigla,
-      nome,
+      descricao,
       perPage,
       current,
     });

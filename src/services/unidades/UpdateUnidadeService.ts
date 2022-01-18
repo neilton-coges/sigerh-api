@@ -7,7 +7,7 @@ import { IUnidadesRepository } from '../../repositories/models/IUnidadesReposito
 type UpdateUnidadeData = {
   id: string;
   sigla: string;
-  nome: string;
+  descricao: string;
 }
 
 @injectable()
@@ -17,7 +17,7 @@ class UpdateUnidadeService {
     private unidadesRepository: IUnidadesRepository,
   ) {}
 
-  async execute({ id, sigla, nome }: UpdateUnidadeData): Promise<Unidade> {
+  async execute({ id, sigla, descricao }: UpdateUnidadeData): Promise<Unidade> {
     const unidade = await this.unidadesRepository.findById(id);
 
     if (!unidade) {
@@ -25,7 +25,7 @@ class UpdateUnidadeService {
     }
 
     unidade.sigla = sigla;
-    unidade.nome = nome;
+    unidade.descricao = descricao;
 
     await this.unidadesRepository.update(unidade);
 

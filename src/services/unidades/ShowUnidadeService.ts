@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+
 import { Unidade } from '../../entities/Unidade';
 import { AppError } from '../../error/AppError';
 import { IUnidadesRepository } from '../../repositories/models/IUnidadesRepository';

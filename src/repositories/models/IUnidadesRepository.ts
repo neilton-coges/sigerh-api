@@ -2,18 +2,18 @@ import { Unidade } from '../../entities/Unidade';
 import { IPage } from './IPage';
 import { IPaginator } from './IPaginator';
 
-type CreateUnidadeData = Pick<Unidade, 'sigla' | 'nome'> & {
+type CreateUnidadeData = Pick<Unidade, 'sigla' | 'descricao'> & {
   unidadePaiId?: string
 };
 
 type ListUnidadeData = {
   sigla?: string;
-  nome?: string;
+  descricao?: string;
 }
 
 type PaginateUnidadeData = IPaginator & {
   sigla?: string;
-  nome?: string;
+  descricao?: string;
 }
 
 interface IUnidadesRepository {

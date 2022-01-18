@@ -10,7 +10,7 @@ const unidadesController = new UnidadesController();
 const bodyValidation = {
   [Segments.BODY]: {
     sigla: Joi.string().required(),
-    nome: Joi.string().required(),
+    descricao: Joi.string().required(),
     unidadePaiId: Joi.string(),
   },
 };

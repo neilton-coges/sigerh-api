@@ -9,7 +9,7 @@ import { UpdateUnidadeService } from '../services/unidades/UpdateUnidadeService'
 
 type IndexRequestQuery = {
   sigla?: string;
-  nome?: string;
+  descricao?: string;
   isPaginate?: boolean;
   perPage?: number;
   current?: number;
@@ -18,14 +18,14 @@ type IndexRequestQuery = {
 class UnidadesController {
   async index(request: Request, response: Response): Promise<Response> {
     const {
-      sigla, nome, isPaginate, perPage, current,
+      sigla, descricao, isPaginate, perPage, current,
     } = request.query as IndexRequestQuery;
 
     if (isPaginate) {
       const paginateUnidadeService = container.resolve(PaginateUnidadeService);
       const page = await paginateUnidadeService.execute({
         sigla,
-        nome,
+        descricao,
         perPage,
         current,
       });
@@ -36,7 +36,7 @@ class UnidadesController {
     const listUnidadeService = container.resolve(ListUnidadeService);
     const data = await listUnidadeService.execute({
       sigla,
-      nome,
+      descricao,
     });
 
     return response.json(data);
@@ -53,13 +53,13 @@ class UnidadesController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { sigla, nome, unidadePaiId } = request.body;
+    const { sigla, descricao, unidadePaiId } = request.body;
 
     const createUnidadeService = container.resolve(CreateUnidadeService);
 
     const unidade = await createUnidadeService.execute({
       sigla,
-      nome,
+      descricao,
       unidadePaiId,
     });
 
@@ -68,14 +68,14 @@ class UnidadesController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { sigla, nome } = request.body;
+    const { sigla, descricao } = request.body;
 
     const updateUnidadeService = container.resolve(UpdateUnidadeService);
 
     const unidade = await updateUnidadeService.execute({
       id,
       sigla,
-      nome,
+      descricao,
     });
 
     return response.json(unidade);

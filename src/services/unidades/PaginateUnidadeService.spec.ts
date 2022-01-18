@@ -13,12 +13,12 @@ describe('PaginateUnidade', () => {
   it('deve ser possível paginar unidades', async () => {
     const unidade1 = await fakeUnidadesRepository.create({
       sigla: 'sigla1',
-      nome: 'nome1',
+      descricao: 'descricao1',
     });
 
     await fakeUnidadesRepository.create({
       sigla: 'sigla2',
-      nome: 'nome2',
+      descricao: 'descricao2',
     });
 
     const page = await paginateUnidadeService.execute({

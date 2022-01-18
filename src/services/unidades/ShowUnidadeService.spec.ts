@@ -13,7 +13,7 @@ describe('ShowUnidade', () => {
 
   it('deve ser possível mostrar uma unidade', async () => {
     const { id } = await fakeUnidadesRepository.create({
-      nome: 'nome',
+      descricao: 'descricao',
       sigla: 'sigla',
     });
 

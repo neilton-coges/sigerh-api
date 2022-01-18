@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+
 import { Unidade } from '../../entities/Unidade';
 import { IUnidadesRepository, ListUnidadeData } from '../../repositories/models/IUnidadesRepository';
 
@@ -9,8 +10,8 @@ class ListUnidadeService {
     private unidadesRepository: IUnidadesRepository,
   ) {}
 
-  async execute({ nome, sigla }: ListUnidadeData): Promise<Unidade[]> {
-    const unidades = await this.unidadesRepository.list({ nome, sigla });
+  async execute({ descricao, sigla }: ListUnidadeData): Promise<Unidade[]> {
+    const unidades = await this.unidadesRepository.list({ descricao, sigla });
 
     return unidades;
   }

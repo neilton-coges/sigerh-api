@@ -14,7 +14,7 @@ describe('DestroyUnidade', () => {
   it('deve ser possível remover uma unidade', async () => {
     const { id } = await fakeUnidadesRepository.create({
       sigla: 'sigla',
-      nome: 'nome',
+      descricao: 'descricao',
     });
 
     const destroy = jest.spyOn(fakeUnidadesRepository, 'destroy');

@@ -13,12 +13,12 @@ describe('ListUnidade', () => {
   it('deve ser possível listar unidades', async () => {
     const unidade1 = await fakeUnidadesRepository.create({
       sigla: 'sigla1',
-      nome: 'nome1',
+      descricao: 'descricao1',
     });
 
     const unidade2 = await fakeUnidadesRepository.create({
       sigla: 'sigla2',
-      nome: 'nome2',
+      descricao: 'descricao2',
     });
 
     const unidades = await listUnidadeService.execute({});
