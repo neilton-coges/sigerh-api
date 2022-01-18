@@ -34,6 +34,10 @@ class FakeJornadasRepository implements IJornadasRepository {
     return this.jornadas.find((item) => item.id === id);
   }
 
+  async findByIdWithHoras(id: string): Promise<Jornada> {
+    return this.jornadas.find((item) => item.id === id);
+  }
+
   async listWithHoras(): Promise<Jornada[]> {
     return this.jornadas;
   }

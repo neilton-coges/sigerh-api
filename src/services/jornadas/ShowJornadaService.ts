@@ -12,7 +12,7 @@ class ShowJornadaService {
   ) {}
 
   async execute(id: string): Promise<Jornada> {
-    const jornada = await this.jornadasRepository.findById(id);
+    const jornada = await this.jornadasRepository.findByIdWithHoras(id);
 
     if (!jornada) {
       throw new AppError('Jornada não encontrada.');

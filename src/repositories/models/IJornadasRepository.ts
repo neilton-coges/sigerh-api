@@ -10,6 +10,7 @@ interface IJornadasRepository {
   update(jornada: Jornada): Promise<Jornada>;
   destroy(id: string): Promise<void>;
   findById(id: string): Promise<Jornada>;
+  findByIdWithHoras(id: string): Promise<Jornada>;
   listWithHoras(): Promise<Jornada[]>;
 }
 

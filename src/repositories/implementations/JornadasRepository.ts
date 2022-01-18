@@ -33,6 +33,10 @@ class JornadasRepository implements IJornadasRepository {
     return this.repository.findOne(id);
   }
 
+  async findByIdWithHoras(id: string): Promise<Jornada> {
+    return this.repository.findOne(id, { relations: ['horas'] });
+  }
+
   async listWithHoras(): Promise<Jornada[]> {
     return this.repository.find({
       relations: ['horas'],
