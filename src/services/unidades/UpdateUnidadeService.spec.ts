@@ -24,7 +24,7 @@ describe('UpdateUnidade', () => {
     });
 
     expect(unidadeUpdated.sigla).toBe('siglaAtualizada');
-    expect(unidadeUpdated.descricao).toBe('nomeAtualizado');
+    expect(unidadeUpdated.descricao).toBe('descricaoAtualizado');
   });
 
   it('não deve ser possível atualizar uma unidade inexistente', async () => {
