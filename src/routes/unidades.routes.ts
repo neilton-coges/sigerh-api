@@ -11,7 +11,7 @@ const bodyValidation = {
   [Segments.BODY]: {
     sigla: Joi.string().required(),
     descricao: Joi.string().required(),
-    unidadePaiId: Joi.string(),
+    unidadePaiId: Joi.string().allow('', null),
   },
 };
 

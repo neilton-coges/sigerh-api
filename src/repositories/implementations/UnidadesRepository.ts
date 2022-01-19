@@ -50,10 +50,6 @@ class UnidadesRepository implements IUnidadesRepository {
       });
     }
 
-    query.andWhere({
-      unidadePaiId: null,
-    });
-
     return query.getMany();
   }
 
@@ -77,8 +73,8 @@ class UnidadesRepository implements IUnidadesRepository {
       });
     }
 
-    query.andWhere({
-      unidadePaiId: null,
+    query.orderBy({
+      sigla: 'ASC',
     });
 
     const size = await query.getCount();
