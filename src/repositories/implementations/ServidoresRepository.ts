@@ -111,7 +111,7 @@ class ServidoresRepository implements IServidoresRepository {
 
     if (cpf) {
       query.andWhere({
-        sigla: ILike(`%${cpf}%`),
+        cpf: ILike(`%${cpf}%`),
       });
     }
 
