@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    env:
+      JWT_SECRET: ${{ secrets.JTW_SECRET }}
 
     steps:
       - uses: actions/checkout@v2
