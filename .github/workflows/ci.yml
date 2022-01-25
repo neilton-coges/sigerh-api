@@ -23,6 +23,7 @@ jobs:
         run: |
           touch .env
           echo JWT_SECRET=${{ secrets.JTW_SECRET }} >> .env
+          cat .env
        
           
       - name: install dependencies
