@@ -22,7 +22,7 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo JWT_SECRET=ab3c3fce01d4ef7c36992fa8d223cbe0 >> .env
+          echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
           cat .env
        
           
