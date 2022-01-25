@@ -11,17 +11,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    env:
-      JWT_SECRET: ${{ secrets.JTW_SECRET }}
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: use nodejs
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-      - name: Install dependencies
+      
+      - name: create env file
+        run: |
+          touch .env
+          echo JWT_SECRET=${{ secrets.JTW_SECRET }} >> .env
+       
+          
+      - name: install dependencies
         run: yarn
       - run: yarn test
       - run: yarn build
