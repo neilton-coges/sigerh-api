@@ -9,6 +9,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
+    "rootDir": "./",
+    "outDir": "./dist",
+    "baseUrl": "./src"
   },
   "exclude": [
     "coverage"

@@ -21,7 +21,7 @@ class Usuario extends BaseModel {
   @Column()
   senha: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: TipoUsuario })
   tipo: TipoUsuario;
 
   @Column({ name: 'servidor_id' })

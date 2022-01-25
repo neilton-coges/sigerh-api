@@ -10,7 +10,7 @@ enum TipoCargo {
 
 @Entity('cargos')
 class Cargo extends BaseModel {
-  @Column()
+  @Column({ type: 'enum', enum: TipoCargo })
   tipo: TipoCargo;
 
   @Column()

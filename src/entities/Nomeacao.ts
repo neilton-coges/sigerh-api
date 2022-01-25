@@ -15,7 +15,7 @@ enum TipoNomeacao {
 
 @Entity('nomeacoes')
 class Nomeacao extends BaseModel {
-  @Column()
+  @Column({ type: 'enum', enum: TipoNomeacao })
   tipo: TipoNomeacao;
 
   @Column({ name: 'cargo_id' })

@@ -54,13 +54,13 @@ class Servidor extends BaseModel {
   @Column({ name: 'email_pessoal' })
   emailPessoal: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: Genero })
   genero: Genero;
 
-  @Column({ name: 'tipo_sanguineo' })
+  @Column({ name: 'tipo_sanguineo', type: 'enum', enum: TipoSanguineo })
   tipoSanguineo: TipoSanguineo;
 
-  @Column({ name: 'cor_raca' })
+  @Column({ name: 'cor_raca', type: 'enum', enum: CorRaca })
   corRaca: CorRaca;
 
   @Column()
@@ -72,7 +72,7 @@ class Servidor extends BaseModel {
   @Column({ name: 'naturalidade_estado' })
   naturalidadeEstado: string;
 
-  @Column({ name: 'estado_civil' })
+  @Column({ name: 'estado_civil', type: 'enum', enum: EstadoCivil })
   estadoCivil: EstadoCivil;
 
   @Column({ name: 'conjuge_nome' })
