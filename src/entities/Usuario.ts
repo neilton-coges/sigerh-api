@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Column, Entity, JoinColumn, OneToOne,
 } from 'typeorm';
@@ -16,6 +17,7 @@ class Usuario extends BaseModel {
   @Column()
   login: string;
 
+  @Exclude()
   @Column()
   senha: string;
 

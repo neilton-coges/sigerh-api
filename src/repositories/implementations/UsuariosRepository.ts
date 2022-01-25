@@ -1,7 +1,13 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, ILike, Repository } from 'typeorm';
 
 import { Usuario } from '../../entities/Usuario';
-import { CreateUsuarioData, IUsuariosRepository } from '../models/IUsuariosRepository';
+import { IPage } from '../models/IPage';
+import {
+  CreateUsuarioData,
+  IUsuariosRepository,
+  ListUsuarioData,
+  PaginateUsuarioData,
+} from '../models/IUsuariosRepository';
 
 class UsuariosRepository implements IUsuariosRepository {
   private repository: Repository<Usuario>;
@@ -24,6 +30,76 @@ class UsuariosRepository implements IUsuariosRepository {
     });
 
     return this.repository.save(usuario);
+  }
+
+  async update(usuario: Usuario): Promise<Usuario> {
+    return this.repository.save(usuario);
+  }
+
+  async destroy(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
+  async list({ login, tipo }: ListUsuarioData): Promise<Usuario[]> {
+    const query = this.repository.createQueryBuilder('usuario');
+
+    if (login) {
+      query.andWhere({
+        cpf: ILike(`%${login}%`),
+      });
+    }
+
+    if (tipo) {
+      query.andWhere({
+        tipo,
+      });
+    }
+
+    query.leftJoinAndSelect('usuario.servidor', 'servidor');
+
+    return query.getMany();
+  }
+
+  async paginate({
+    login,
+    tipo,
+    current,
+    perPage,
+  }: PaginateUsuarioData): Promise<IPage<Usuario>> {
+    const skip = current * perPage - perPage;
+    const take = perPage;
+
+    const query = this.repository.createQueryBuilder('usuario');
+
+    if (login) {
+      query.andWhere({
+        login: ILike(`%${login}%`),
+      });
+    }
+
+    if (tipo) {
+      query.andWhere({
+        tipo,
+      });
+    }
+
+    query.leftJoinAndSelect('usuario.servidor', 'servidor');
+
+    const size = await query.getCount();
+    const total = Math.ceil(size / perPage);
+
+    query.take(take);
+    query.skip(skip);
+
+    const data = await query.getMany();
+
+    return {
+      data,
+      perPage,
+      current,
+      size,
+      total,
+    };
   }
 
   async findById(id: string): Promise<Usuario> {
