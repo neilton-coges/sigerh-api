@@ -4,11 +4,13 @@ import { AppError } from '../../error/AppError';
 import { FakeCargosRepository } from '../../repositories/fakes/FakeCargosRepository';
 import { FakeLotacoesRepository } from '../../repositories/fakes/FakeLotacoesRepository';
 import { FakeNomeacoesRepository } from '../../repositories/fakes/FakeNomeacoesRepository';
+import { FakeCdsFgsRepository } from '../../repositories/fakes/FakeCdsFgsRepository';
 import { CreateNomeacaoService } from './CreateNomeacaoService';
 
 let fakeNomeacoesRepository: FakeNomeacoesRepository;
 let fakeLotacoesRepository: FakeLotacoesRepository;
 let fakeCargosRepository: FakeCargosRepository;
+let fakeCdsFgsRepository: FakeCdsFgsRepository;
 let createNomeacaoService: CreateNomeacaoService;
 
 describe('CreateNomeacao', () => {
@@ -16,10 +18,12 @@ describe('CreateNomeacao', () => {
     fakeNomeacoesRepository = new FakeNomeacoesRepository();
     fakeLotacoesRepository = new FakeLotacoesRepository();
     fakeCargosRepository = new FakeCargosRepository();
+    fakeCdsFgsRepository = new FakeCdsFgsRepository();
     createNomeacaoService = new CreateNomeacaoService(
       fakeNomeacoesRepository,
       fakeLotacoesRepository,
       fakeCargosRepository,
+      fakeCdsFgsRepository,
     );
   });
 
@@ -33,7 +37,7 @@ describe('CreateNomeacao', () => {
     const nomeacao = await createNomeacaoService.execute({
       tipo: TipoNomeacao.NOMEACAO,
       cargoId: cargo.id,
-      cdsFgId: 'nomecaoCdsFgId',
+      cdsFgId: undefined,
       unidadeId: 'nomeacaoUnidadeId',
       servidorId: 'nomeacaoServidorId',
       data: new Date(),
@@ -142,6 +146,34 @@ describe('CreateNomeacao', () => {
         cdsFgId: 'nomecaoCdsFgId',
         unidadeId: 'nomeacaoUnidadeId',
         servidorId: 'servidorId',
+        data: new Date(),
+        diofProcesso: 'nomeacaoDiofProcesso',
+        observacao: 'nomeacaoObservacao',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('não deve ser possível criar um nomeação para um CDS/FG sem vagas disponíveis', async () => {
+    const cdsFg = await fakeCdsFgsRepository.create({
+      quantidadeVagas: 0, // sem vaga disponível
+      remuneracao: 1000,
+      simbologia: 'cdsFgSimbologia',
+      tipo: 'CDS',
+    });
+
+    const cargo = await fakeCargosRepository.create({
+      tipo: TipoCargo.EFETIVO,
+      descricao: 'cargo1Descricao',
+      nivelCargoId: 'nivelCargoId',
+    });
+
+    await expect(
+      createNomeacaoService.execute({
+        tipo: TipoNomeacao.NOMEACAO,
+        cargoId: cargo.id,
+        cdsFgId: cdsFg.id,
+        unidadeId: 'nomeacaoUnidadeId',
+        servidorId: 'nomeacaoServidorId',
         data: new Date(),
         diofProcesso: 'nomeacaoDiofProcesso',
         observacao: 'nomeacaoObservacao',

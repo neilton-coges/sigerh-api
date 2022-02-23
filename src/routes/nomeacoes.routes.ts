@@ -8,7 +8,7 @@ const nomeacoesController = new NomeacoesController();
 
 const createValidation = celebrate({
   [Segments.BODY]: {
-    tipo: Joi.string().valid('NOMEACAO', 'EXONERACAO'),
+    tipo: Joi.string().valid('NOMEACAO', 'EXONERACAO').required(),
     cargoId: Joi.string().required(),
     cdsFgId: Joi.string().allow(null, ''),
     unidadeId: Joi.string().required(),
