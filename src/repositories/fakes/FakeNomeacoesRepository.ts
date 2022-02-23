@@ -27,6 +27,10 @@ class FakeNomeacoesRepository implements INomeacoesRepository {
     return nomeacao;
   }
 
+  async findById(id: string): Promise<Nomeacao> {
+    return this.nomeacoes.find((item) => item.id === id);
+  }
+
   async paginate({
     tipo, nomeServidor, current, perPage,
   }: PaginateNomeacaoData): Promise<IPage<Nomeacao>> {

@@ -35,6 +35,10 @@ class NomeacoesRepository implements INomeacoesRepository {
     return this.repository.save(nomeacao);
   }
 
+  async findById(id: string): Promise<Nomeacao> {
+    return this.repository.findOne(id);
+  }
+
   async paginate({
     tipo, nomeServidor, perPage, current,
   }: PaginateNomeacaoData): Promise<IPage<Nomeacao>> {
