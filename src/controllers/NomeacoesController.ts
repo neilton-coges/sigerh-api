@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { instanceToInstance } from 'class-transformer';
 
+import { ShowNomeacaoService } from '../services/nomeacoes/ShowNomeacaoService';
 import { CreateNomeacaoService } from '../services/nomeacoes/CreateNomeacaoService';
 import { PaginateNomeacaoService } from '../services/nomeacoes/PaginateNomeacaoService';
 
@@ -27,6 +29,16 @@ class NomeacoesController {
     });
 
     return response.json(page);
+  }
+
+  async show(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const showNomeacaoService = container.resolve(ShowNomeacaoService);
+
+    const nomeacao = await showNomeacaoService.execute(id);
+
+    return response.json(instanceToInstance(nomeacao));
   }
 
   async create(request: Request, response: Response): Promise<Response> {

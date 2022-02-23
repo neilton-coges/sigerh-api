@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   Column, Entity, JoinColumn, ManyToOne,
 } from 'typeorm';
@@ -54,6 +55,15 @@ class Nomeacao extends BaseModel {
   @ManyToOne(() => Unidade)
   @JoinColumn({ name: 'unidade_id', referencedColumnName: 'id' })
   unidade: Unidade;
+
+  @Expose({ name: 'dataFormatada' })
+  getDataFormatada(): string {
+    return this.data.toLocaleDateString('pt', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
 }
 
 export { TipoNomeacao, Nomeacao };

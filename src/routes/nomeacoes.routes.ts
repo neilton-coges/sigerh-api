@@ -20,6 +20,7 @@ const createValidation = celebrate({
 });
 
 nomeacoesRoutes.get('/', is(['ADMIN', 'EDITOR']), nomeacoesController.index);
+nomeacoesRoutes.get('/:id', is(['ADMIN', 'EDITOR']), nomeacoesController.show);
 nomeacoesRoutes.post('/', is(['ADMIN', 'EDITOR']), createValidation, nomeacoesController.create);
 
 export { nomeacoesRoutes };
