@@ -1,4 +1,6 @@
-import { getRepository, ILike, Repository } from 'typeorm';
+import {
+  Between, getRepository, ILike, Repository,
+} from 'typeorm';
 
 import { Servidor } from '../../entities/Servidor';
 import { IPage } from '../models/IPage';
@@ -83,8 +85,15 @@ class ServidoresRepository implements IServidoresRepository {
     await this.repository.delete(id);
   }
 
-  async list({ cpf, nome }: ListServidorData): Promise<Servidor[]> {
-    const query = this.repository.createQueryBuilder();
+  async list({
+    cpf, nome, anoProximaProgressao, tipoVinculo,
+  }: ListServidorData): Promise<Servidor[]> {
+    const query = this.repository.createQueryBuilder('servidores');
+
+    query.leftJoinAndSelect('servidores.lotacoes', 'lotacoes');
+    query.leftJoinAndSelect('lotacoes.classeNivelCargo', 'classeNivelCargo');
+    query.leftJoinAndSelect('lotacoes.padraoClasseNivelCargo', 'padraoClasseNivelCargo');
+    query.leftJoinAndSelect('lotacoes.cargo', 'cargo');
 
     if (cpf) {
       query.andWhere({
@@ -96,18 +105,36 @@ class ServidoresRepository implements IServidoresRepository {
       query.andWhere({
         nome: ILike(`%${nome}%`),
       });
+    }
+
+    if (anoProximaProgressao) {
+      const firstDateOfYear = new Date(anoProximaProgressao, 0, 1);
+      const lastDateOfYear = new Date(anoProximaProgressao, 11, 31);
+
+      query.andWhere({
+        dataProximaProgressao: Between(firstDateOfYear, lastDateOfYear),
+      });
+    }
+
+    if (tipoVinculo) {
+      query.andWhere('cargo.tipo = :tipoVinculo', { tipoVinculo });
     }
 
     return query.getMany();
   }
 
   async paginate({
-    cpf, nome, current, perPage,
+    cpf, nome, anoProximaProgressao, tipoVinculo, current, perPage,
   }: PaginateServidorData): Promise<IPage<Servidor>> {
     const skip = current * perPage - perPage;
     const take = perPage;
 
-    const query = this.repository.createQueryBuilder();
+    const query = this.repository.createQueryBuilder('servidores');
+
+    query.leftJoinAndSelect('servidores.lotacoes', 'lotacoes');
+    query.leftJoinAndSelect('lotacoes.classeNivelCargo', 'classeNivelCargo');
+    query.leftJoinAndSelect('lotacoes.padraoClasseNivelCargo', 'padraoClasseNivelCargo');
+    query.leftJoinAndSelect('lotacoes.cargo', 'cargo');
 
     if (cpf) {
       query.andWhere({
@@ -118,6 +145,19 @@ class ServidoresRepository implements IServidoresRepository {
     if (nome) {
       query.andWhere({
         nome: ILike(`%${nome}%`),
+      });
+    }
+
+    if (tipoVinculo) {
+      query.andWhere('cargo.tipo = :tipoVinculo', { tipoVinculo });
+    }
+
+    if (anoProximaProgressao) {
+      const firstDateOfYear = new Date(anoProximaProgressao, 0, 1);
+      const lastDateOfYear = new Date(anoProximaProgressao, 11, 31);
+
+      query.andWhere({
+        dataProximaProgressao: Between(firstDateOfYear, lastDateOfYear),
       });
     }
 
@@ -153,6 +193,18 @@ class ServidoresRepository implements IServidoresRepository {
         { emailPessoal: email },
       ],
     });
+  }
+
+  async findByIdWithLotacoes(id: string): Promise<Servidor> {
+    const query = this.repository.createQueryBuilder('servidor');
+
+    const servidor = await query
+      .innerJoinAndSelect('servidor.lotacoes', 'lotacao')
+      .innerJoinAndSelect('lotacao.cargo', 'cargo')
+      .where('servidor.id = :id', { id })
+      .getOne();
+
+    return servidor;
   }
 }
 

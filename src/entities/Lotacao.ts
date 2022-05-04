@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   Column, Entity, JoinColumn, ManyToOne,
 } from 'typeorm';
@@ -5,7 +6,10 @@ import {
 import { BaseModel } from './BaseModel';
 import { Cargo } from './Cargo';
 import { CdsFg } from './CdsFg';
+import { ClasseNivelCargo } from './ClasseNivelCargo';
 import { Jornada } from './Jornada';
+import { PadraoClasseNivelCargo } from './PadraoClasseNivelCargo';
+import { Servidor } from './Servidor';
 import { Unidade } from './Unidade';
 
 @Entity('lotacoes')
@@ -37,6 +41,12 @@ class Lotacao extends BaseModel {
   @Column({ name: 'jornada_id' })
   jornadaId: string;
 
+  @Column({ name: 'classe_nivel_cargo_id' })
+  classeNivelCargoId: string;
+
+  @Column({ name: 'padrao_classe_nivel_cargo_id' })
+  padraoClasseNivelCargoId: string;
+
   @ManyToOne(() => Cargo)
   @JoinColumn({ name: 'cargo_id', referencedColumnName: 'id' })
   cargo: Cargo;
@@ -56,6 +66,27 @@ class Lotacao extends BaseModel {
   @ManyToOne(() => Jornada)
   @JoinColumn({ name: 'jornada_id', referencedColumnName: 'id' })
   jornada: Jornada;
+
+  @ManyToOne(() => Servidor)
+  @JoinColumn({ name: 'servidor_id', referencedColumnName: 'id' })
+  servidor: Servidor;
+
+  @ManyToOne(() => ClasseNivelCargo)
+  @JoinColumn({ name: 'classe_nivel_cargo_id', referencedColumnName: 'id' })
+  classeNivelCargo: ClasseNivelCargo;
+
+  @ManyToOne(() => PadraoClasseNivelCargo)
+  @JoinColumn({ name: 'padrao_classe_nivel_cargo_id', referencedColumnName: 'id' })
+  padraoClasseNivelCargo: PadraoClasseNivelCargo;
+
+  @Expose({ name: 'dataAdmissaoFormatada' })
+  getDataAdmissao(): string {
+    return this.dataAdmissao?.toLocaleDateString('pt', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
 }
 
 export { Lotacao };

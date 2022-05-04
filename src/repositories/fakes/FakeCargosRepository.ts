@@ -7,13 +7,16 @@ import { IPage } from '../models/IPage';
 class FakeCargosRepository implements ICargosRepository {
   private cargos: Cargo[] = [];
 
-  async create({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
+  async create({
+    tipo, descricao, nivelCargoId, intervaloProgressao,
+  }: CreateCargoData): Promise<Cargo> {
     const cargo = new Cargo();
 
     Object.assign(cargo, {
       tipo,
       descricao,
       nivelCargoId,
+      intervaloProgressao,
     });
 
     this.cargos.push(cargo);

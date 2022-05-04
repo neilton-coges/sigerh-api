@@ -12,11 +12,12 @@ class PaginateServidorService {
   ) {}
 
   async execute({
-    cpf, nome, current = 1, perPage = 15,
+    cpf, nome, anoProximaProgressao, current = 1, perPage = 15,
   }: PaginateServidorData): Promise<IPage<Servidor>> {
     const page = await this.servidoresRepository.paginate({
       cpf,
       nome,
+      anoProximaProgressao,
       current,
       perPage,
     });

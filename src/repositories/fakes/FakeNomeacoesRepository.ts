@@ -1,7 +1,6 @@
 import { Nomeacao } from '../../entities/Nomeacao';
 import { CreateNomeacaoData, INomeacoesRepository, PaginateNomeacaoData } from '../models/INomeacoesRepository';
 import { IPage } from '../models/IPage';
-import { IPaginator } from '../models/IPaginator';
 
 class FakeNomeacoesRepository implements INomeacoesRepository {
   private nomeacoes: Nomeacao[] = [];

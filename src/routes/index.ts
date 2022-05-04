@@ -9,6 +9,7 @@ import { servidoresRoutes } from './servidores.routes';
 import { nomeacoesRoutes } from './nomeacoes.routes';
 import { usuariosRoutes } from './usuarios.routes';
 import { sessoesRoutes } from './sessoes.routes';
+import { progressoesRoutes } from './progressoes.routes';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 
 const routes = Router();
@@ -22,5 +23,6 @@ routes.use('/servidores', ensureAuthenticated, servidoresRoutes);
 routes.use('/nomeacoes', ensureAuthenticated, nomeacoesRoutes);
 routes.use('/usuarios', ensureAuthenticated, usuariosRoutes);
 routes.use('/sessoes', sessoesRoutes);
+routes.use('/progressoes', progressoesRoutes);
 
 export { routes };

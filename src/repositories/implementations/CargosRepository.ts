@@ -15,11 +15,14 @@ class CargosRepository implements ICargosRepository {
     this.repository = getRepository(Cargo);
   }
 
-  async create({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
+  async create({
+    tipo, descricao, nivelCargoId, intervaloProgressao,
+  }: CreateCargoData): Promise<Cargo> {
     const cargo = this.repository.create({
       tipo,
       descricao,
       nivelCargoId,
+      intervaloProgressao,
     });
 
     return this.repository.save(cargo);

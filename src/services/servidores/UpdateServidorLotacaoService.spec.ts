@@ -1,14 +1,24 @@
+import { FakeServidoresRepository } from '../../repositories/fakes/FakeServidoresRepository';
 import { AppError } from '../../error/AppError';
 import { FakeLotacoesRepository } from '../../repositories/fakes/FakeLotacoesRepository';
+import { FakeProgressoesRepository } from '../../repositories/fakes/FakeProgressoesRepository';
 import { UpdateServidorLotacaoService } from './UpdateServidorLotacaoService';
 
 let fakeLotacoesRepository: FakeLotacoesRepository;
+let fakeServidoresRepository: FakeServidoresRepository;
+let fakeProgressosRepository: FakeProgressoesRepository;
 let updateServidorLotacaoService: UpdateServidorLotacaoService;
 
 describe('UpdateLotacao', () => {
   beforeEach(() => {
     fakeLotacoesRepository = new FakeLotacoesRepository();
-    updateServidorLotacaoService = new UpdateServidorLotacaoService(fakeLotacoesRepository);
+    fakeServidoresRepository = new FakeServidoresRepository();
+    fakeProgressosRepository = new FakeProgressoesRepository();
+    updateServidorLotacaoService = new UpdateServidorLotacaoService(
+      fakeLotacoesRepository,
+      fakeServidoresRepository,
+      fakeProgressosRepository,
+    );
   });
 
   it('deve ser possível atualizar uma lotacao', async () => {
@@ -36,6 +46,8 @@ describe('UpdateLotacao', () => {
         observacao: 'lotacao2Observacao',
         subUnidadeId: 'lotacao2SubunidadeId',
         jornadaId: 'lotacao2JornadaId',
+        classeNivelCargoId: 'classeNivelCargoId',
+        padraoClasseNivelCargoId: 'padraoClasseNivelCargoId',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

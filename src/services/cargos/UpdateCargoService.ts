@@ -12,7 +12,7 @@ class UpdateCargoService {
   ) {}
 
   async execute({
-    id, tipo, descricao, nivelCargoId,
+    id, tipo, descricao, nivelCargoId, intervaloProgressao,
   }: UpdateCargoData): Promise<Cargo> {
     const cargo = await this.cargosRepository.findById(id);
 
@@ -29,6 +29,7 @@ class UpdateCargoService {
     cargo.descricao = descricao;
     cargo.tipo = tipo;
     cargo.nivelCargoId = nivelCargoId;
+    cargo.intervaloProgressao = intervaloProgressao;
 
     await this.cargosRepository.update(cargo);
 

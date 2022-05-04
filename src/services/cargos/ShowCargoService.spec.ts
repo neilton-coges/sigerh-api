@@ -17,6 +17,7 @@ describe('ShowCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricao',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     const cargo = await showCargoService.execute(id);

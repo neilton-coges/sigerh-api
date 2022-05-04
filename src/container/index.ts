@@ -24,6 +24,8 @@ import { NomeacoesRepository } from '../repositories/implementations/NomeacoesRe
 import { INomeacoesRepository } from '../repositories/models/INomeacoesRepository';
 import { IUsuariosRepository } from '../repositories/models/IUsuariosRepository';
 import { UsuariosRepository } from '../repositories/implementations/UsuariosRepository';
+import { IProgressoesRepository } from '../repositories/models/IProgressoesRepository';
+import { ProgressoesRepository } from '../repositories/implementations/ProgressoesRepository';
 
 container.registerSingleton<ICdsFgsRepository>(
   'CdsFgsRepository',
@@ -72,4 +74,8 @@ container.registerSingleton<INomeacoesRepository>(
 container.registerSingleton<IUsuariosRepository>(
   'UsuariosRepository',
   UsuariosRepository,
+);
+container.registerSingleton<IProgressoesRepository>(
+  'ProgressoesRepository',
+  ProgressoesRepository,
 );

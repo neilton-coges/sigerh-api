@@ -5,7 +5,7 @@ type CreateLotacaoData = Pick<Lotacao, 'cargoId' | 'cdsFgId' | 'unidadeId' | 'se
   cargo?: Cargo;
 }
 
-type UpdateLotacaoData = Pick<Lotacao, 'id' | 'matricula' | 'observacao' | 'dataAdmissao' | 'subUnidadeId' | 'jornadaId'>;
+type UpdateLotacaoData = Pick<Lotacao, 'id' | 'matricula' | 'observacao' | 'dataAdmissao' | 'subUnidadeId' | 'jornadaId' | 'classeNivelCargoId' | 'padraoClasseNivelCargoId'>;
 
 interface ILotacoesRepository {
   create(data: CreateLotacaoData): Promise<Lotacao>;

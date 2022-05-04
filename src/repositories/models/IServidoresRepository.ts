@@ -2,16 +2,20 @@ import { Servidor } from '../../entities/Servidor';
 import { IPage } from './IPage';
 import { IPaginator } from './IPaginator';
 
-type CreateServidorData = Omit<Servidor, 'id' | 'createdAt' | 'updatedAt'>
-type UpdateServidorData = Omit<Servidor, 'createdAt' | 'updatedAt'>;
+type CreateServidorData = Omit<Servidor, 'id' | 'lotacoes' | 'dataProximaProgressao' | 'getDataProximaProgressaoFormatada' | 'createdAt' | 'updatedAt'>
+type UpdateServidorData = Omit<Servidor, 'lotacoes' | 'dataProximaProgressao' | 'getDataProximaProgressaoFormatada' | 'createdAt' | 'updatedAt'>;
 type ListServidorData = {
   cpf?: string;
   nome?: string;
+  anoProximaProgressao?: number;
+  tipoVinculo: string;
 }
 
 type PaginateServidorData = IPaginator & {
   cpf?: string;
   nome?: string;
+  anoProximaProgressao?: number;
+  tipoVinculo: string;
 }
 
 interface IServidoresRepository {
@@ -23,12 +27,13 @@ interface IServidoresRepository {
   findById(id: string): Promise<Servidor>;
   findByCpf(cpf: string): Promise<Servidor>;
   findByEmail(email: string): Promise<Servidor>;
+  findByIdWithLotacoes(id: string): Promise<Servidor>;
 }
 
 export {
+  IServidoresRepository,
   CreateServidorData,
   UpdateServidorData,
   ListServidorData,
   PaginateServidorData,
-  IServidoresRepository,
 };

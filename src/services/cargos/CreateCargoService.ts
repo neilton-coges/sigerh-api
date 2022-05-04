@@ -11,7 +11,9 @@ class CreateCargoService {
     private cargosRepository: ICargosRepository,
   ) {}
 
-  async execute({ tipo, descricao, nivelCargoId }: CreateCargoData): Promise<Cargo> {
+  async execute({
+    tipo, descricao, nivelCargoId, intervaloProgressao,
+  }: CreateCargoData): Promise<Cargo> {
     const cargoAlreadyExists = await this.cargosRepository.findByDescricao(descricao);
 
     if (cargoAlreadyExists) {
@@ -22,6 +24,7 @@ class CreateCargoService {
       tipo,
       descricao,
       nivelCargoId,
+      intervaloProgressao,
     });
 
     return cargo;

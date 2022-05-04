@@ -32,6 +32,7 @@ describe('CreateNomeacao', () => {
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     const nomeacao = await createNomeacaoService.execute({
@@ -53,12 +54,14 @@ describe('CreateNomeacao', () => {
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     const cargoEfetivo2 = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo2Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     await fakeLotacoesRepository.create({
@@ -88,12 +91,14 @@ describe('CreateNomeacao', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: undefined,
     });
 
     const cargoComissao2 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargo2Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: undefined,
     });
 
     await fakeLotacoesRepository.create({
@@ -123,12 +128,14 @@ describe('CreateNomeacao', () => {
       tipo: TipoCargo.FUNCAO_GRATIFICADA,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: undefined,
     });
 
     const cargoFg2 = await fakeCargosRepository.create({
       tipo: TipoCargo.FUNCAO_GRATIFICADA,
       descricao: 'cargo2Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: undefined,
     });
 
     await fakeLotacoesRepository.create({
@@ -165,6 +172,7 @@ describe('CreateNomeacao', () => {
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     await expect(

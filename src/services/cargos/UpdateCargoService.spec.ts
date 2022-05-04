@@ -17,6 +17,7 @@ describe('UpdateCargo', () => {
       tipo: TipoCargo.FUNCAO_GRATIFICADA,
       descricao: 'cargoDescricao',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     const cargoUpdated = await updateCargoService.execute({
@@ -24,6 +25,7 @@ describe('UpdateCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricaoAtualizado',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     expect(cargoUpdated.descricao).toBe('cargoDescricaoAtualizado');
@@ -36,6 +38,7 @@ describe('UpdateCargo', () => {
         tipo: TipoCargo.COMISSAO,
         descricao: 'cargoDescricao',
         nivelCargoId: '',
+        intervaloProgressao: undefined,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -45,12 +48,14 @@ describe('UpdateCargo', () => {
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo1Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     const cargo2 = await fakeCargosRepository.create({
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargo2Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: undefined,
     });
 
     await expect(updateCargoService.execute({

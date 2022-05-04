@@ -16,12 +16,14 @@ describe('PaginateCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargo1Descricao',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo2Descricao',
       nivelCargoId: 'nivelCargoId',
+      intervaloProgressao: 2,
     });
 
     const page = await paginateCargoService.execute({

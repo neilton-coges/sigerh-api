@@ -16,6 +16,7 @@ describe('CreateCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricao',
       nivelCargoId: '',
+      intervaloProgressao: 2,
     });
 
     expect(cargo).toHaveProperty('id');
@@ -26,12 +27,14 @@ describe('CreateCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricaoExistente',
       nivelCargoId: '',
+      intervaloProgressao: 2,
     });
 
     await expect(createCargoService.execute({
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargoDescricaoExistente',
       nivelCargoId: 'cargoNivelCargoId',
+      intervaloProgressao: 2,
     })).rejects.toBeInstanceOf(AppError);
   });
 });

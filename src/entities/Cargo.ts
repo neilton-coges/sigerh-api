@@ -18,6 +18,9 @@ class Cargo extends BaseModel {
 
   @Column({ name: 'nivel_cargo_id' })
   nivelCargoId: string;
+
+  @Column({ name: 'intervalo_progressao' })
+  intervaloProgressao: number;
 }
 
 export { TipoCargo, Cargo };

@@ -10,8 +10,12 @@ class ListServidorService {
     private servidoresRepository: IServidoresRepository,
   ) {}
 
-  async execute({ cpf, nome }: ListServidorData): Promise<Servidor[]> {
-    const servidores = await this.servidoresRepository.list({ cpf, nome });
+  async execute({
+    cpf, nome, anoProximaProgressao, tipoVinculo,
+  }: ListServidorData): Promise<Servidor[]> {
+    const servidores = await this.servidoresRepository.list({
+      cpf, nome, anoProximaProgressao, tipoVinculo,
+    });
 
     return servidores;
   }

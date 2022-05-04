@@ -17,6 +17,7 @@ describe('DestroyCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricao',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     const destroy = jest.spyOn(fakeCargosRepository, 'destroy');

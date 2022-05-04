@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { instanceToInstance } from 'class-transformer';
 
 import { CreateServidorService } from '../services/servidores/CreateServidorService';
 import { DestroyServidorService } from '../services/servidores/DestroyServidorService';
@@ -11,6 +12,8 @@ import { UpdateServidorService } from '../services/servidores/UpdateServidorServ
 type IndexRequestQuery = {
   cpf?: string;
   nome?: string;
+  anoProximaProgressao?: number;
+  tipoVinculo?: string;
   isPaginate?: boolean;
   perPage?: number;
   current?: number;
@@ -19,7 +22,7 @@ type IndexRequestQuery = {
 class ServidoresController {
   async index(request: Request, response: Response): Promise<Response> {
     const {
-      cpf, nome, isPaginate, perPage, current,
+      cpf, nome, anoProximaProgressao, tipoVinculo, isPaginate, perPage, current,
     } = request.query as IndexRequestQuery;
 
     if (isPaginate) {
@@ -28,20 +31,25 @@ class ServidoresController {
       const page = await paginateServidorService.execute({
         cpf,
         nome,
+        anoProximaProgressao,
+        tipoVinculo,
         current,
         perPage,
       });
 
-      return response.json(page);
+      return response.json(instanceToInstance(page));
     }
+
     const listServidorService = container.resolve(ListServidorService);
 
     const servidores = await listServidorService.execute({
       cpf,
       nome,
+      anoProximaProgressao,
+      tipoVinculo,
     });
 
-    return response.json(servidores);
+    return response.json(instanceToInstance(servidores));
   }
 
   async show(request: Request, response: Response): Promise<Response> {
@@ -51,7 +59,7 @@ class ServidoresController {
 
     const servidor = await showServidorService.execute(id);
 
-    return response.json(servidor);
+    return response.json(instanceToInstance(servidor));
   }
 
   async create(request: Request, response: Response): Promise<Response> {
@@ -115,7 +123,7 @@ class ServidoresController {
       pis,
     });
 
-    return response.status(201).json(servidor);
+    return response.status(201).json(instanceToInstance(servidor));
   }
 
   async update(request: Request, response: Response): Promise<Response> {
@@ -181,7 +189,7 @@ class ServidoresController {
       pis,
     });
 
-    return response.json(servidor);
+    return response.json(instanceToInstance(servidor));
   }
 
   async destroy(request: Request, response: Response): Promise<Response> {

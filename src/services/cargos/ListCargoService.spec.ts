@@ -16,12 +16,14 @@ describe('ListCargo', () => {
       tipo: TipoCargo.COMISSAO,
       descricao: 'cargoDescricao',
       nivelCargoId: '',
+      intervaloProgressao: undefined,
     });
 
     const cargo2 = await fakeCargosRepository.create({
       tipo: TipoCargo.EFETIVO,
       descricao: 'cargo2Descricao',
       nivelCargoId: '',
+      intervaloProgressao: 2,
     });
 
     const cargos = await listCargoService.execute({});

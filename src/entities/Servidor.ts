@@ -1,6 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Expose } from 'class-transformer';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { BaseModel } from './BaseModel';
+import { Lotacao } from './Lotacao';
 
 enum Genero {
   MASCULINO = 'MASCULINO',
@@ -113,6 +115,21 @@ class Servidor extends BaseModel {
 
   @Column({ name: 'pis' })
   pis: string;
+
+  @Column({ name: 'data_proxima_progressao' })
+  dataProximaProgressao: Date;
+
+  @OneToMany(() => Lotacao, (lotacao) => lotacao.servidor)
+  lotacoes: Lotacao[];
+
+  @Expose({ name: 'dataProximaProgressaoFormatada' })
+  getDataProximaProgressaoFormatada(): string {
+    return this.dataProximaProgressao?.toLocaleDateString('pt', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
 }
 
 export {

@@ -1,3 +1,5 @@
+import { isWithinInterval } from 'date-fns';
+
 import { Servidor } from '../../entities/Servidor';
 import { IPage } from '../models/IPage';
 import {
@@ -85,15 +87,33 @@ class FakeServidoresRepository implements IServidoresRepository {
     this.servidores.splice(index, 1);
   }
 
-  async list({ cpf, nome }: ListServidorData): Promise<Servidor[]> {
+  async list({ cpf, nome, anoProximaProgressao }: ListServidorData): Promise<Servidor[]> {
     let data = [...this.servidores];
 
-    if (cpf || nome) {
-      data = this.servidores.filter((item) => item.cpf.includes(cpf) || item.nome.includes(nome));
+    if (cpf || nome || anoProximaProgressao) {
+      const firstDateOfYear = new Date(anoProximaProgressao, 0, 1);
+      const lastDateOfYear = new Date(anoProximaProgressao, 11, 31);
+
+      data = this.servidores.filter(
+        (item) => item.cpf.includes(cpf) || item.nome.includes(nome)
+        || isWithinInterval(item.dataProximaProgressao, {
+          start: firstDateOfYear,
+          end: lastDateOfYear,
+        }),
+      );
     }
 
-    if (cpf && nome) {
-      data = this.servidores.filter((item) => item.cpf.includes(cpf) && item.nome.includes(nome));
+    if (cpf && nome && anoProximaProgressao) {
+      const firstDateOfYear = new Date(anoProximaProgressao, 0, 1);
+      const lastDateOfYear = new Date(anoProximaProgressao, 11, 31);
+
+      data = this.servidores.filter(
+        (item) => item.cpf.includes(cpf) && item.nome.includes(nome)
+        && isWithinInterval(item.dataProximaProgressao, {
+          start: firstDateOfYear,
+          end: lastDateOfYear,
+        }),
+      );
     }
 
     return data;
@@ -142,6 +162,10 @@ class FakeServidoresRepository implements IServidoresRepository {
       (item) => item.emailCorporativo.toLocaleLowerCase() === email.toLocaleLowerCase()
        || item.emailPessoal.toLocaleLowerCase() === email.toLocaleLowerCase(),
     );
+  }
+
+  async findByIdWithLotacoes(id: string): Promise<Servidor> {
+    return this.servidores.find((item) => item.id === id);
   }
 }
 

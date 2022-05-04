@@ -34,7 +34,7 @@ class LotacoesRepository implements ILotacoesRepository {
   }
 
   async findById(id: string): Promise<Lotacao> {
-    return this.repository.findOne(id);
+    return this.repository.findOne(id, { relations: ['cargo'] });
   }
 
   async findByMatricula(matricula: string): Promise<Lotacao> {
